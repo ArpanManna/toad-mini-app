@@ -8,7 +8,7 @@ import mainCharacter from "./main-character.png";
 import hamsterCoin from "./hamster-coin.png";
 import toadIcon from "../assets/toad_svg.svg"
 import leaderBoard from './leaderboard.png'
-
+import leaderBoard1 from "./leaderboard1.png";
 export {
     hamsterExchange,
     binanceLogo,
@@ -19,5 +19,6 @@ export {
     mainCharacter,
     hamsterCoin,
     toadIcon,
-    leaderBoard
+    leaderBoard,
+    leaderBoard1
 };

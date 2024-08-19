@@ -12,6 +12,7 @@ eruda.init()
 
 const IPFS_URL = import.meta.env.VITE_IPFS_URL
 const manifestUrl = IPFS_URL;
+const newManifestUrl = "https://f583-2405-201-8010-d99d-8409-69b3-1af6-3ab0.ngrok-free.app/"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <TonConnectUIProvider manifestUrl={manifestUrl}>

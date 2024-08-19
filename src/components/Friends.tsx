@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
-import { leaderBoard, toadIcon } from '../images';
+import { leaderBoard1, toadIcon } from '../images';
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 
@@ -68,16 +68,17 @@ export function Friends() {
 
 
 
-            <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-xl bg-[#272a2f] flex justify-around items-center z-50 rounded-3xl text-xs">
-                <div onClick={navigateHome} className="text-center text-[#85827d] w-1/5">
+            <div className="fixed bottom-0 w-full bg-blue-700 flex justify-around items-center text-xs">
+                <div onClick={navigateHome} className="text-center text-white w-1/5">
                     <Coins className="w-8 h-8 mx-auto" />
                     <p className="mt-1">Earn</p>
                 </div>
-                <div onClick={navigateLeaderBoard} className="text-center text-[#85827d] w-1/5 bg-[#1c1f24] m-1 p-2 rounded-2xl">
-                    <img src={leaderBoard} alt="Exchange" className="w-8 h-8 mx-auto" />
+                <div onClick={navigateLeaderBoard} className="text-center text-white w-1/5 m-1 p-2 rounded-2xl">
+                    <img src={leaderBoard1} alt="Exchange" className="w-8 h-8 mx-auto" />
+                    {/* <p className="w-8 h-8 mx-auto">🏆</p> */}
                     <p className="mt-1">Leaderboard</p>
                 </div>
-                <div onClick={navigateFriends} className="text-center text-[#85827d] w-1/5">
+                <div onClick={navigateFriends} className="text-center text-white w-1/5">
                     <Friend className="w-8 h-8 mx-auto" />
                     <p className="mt-1">Friends</p>
                 </div>
