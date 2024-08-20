@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
-import { leaderBoard1, toadIcon } from '../images';
+import { leaderBoard, toadIcon } from '../images';
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
-
+import {config} from '../../config.js';
+import axios from 'axios';
 
 export function Friends() {
     
     const navigate = useNavigate()
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : 'iamAM96'
+    const initialValue = [
+        { userName: '', score: 0 }];
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
-    // window.Telegram.WebApp.openTelegramLink(inviteUrl.result.invite_link)
-    const [friends, setFriends] = useState([
-        { id: 1, name: 'pushpaManna', score: 0, initials: 'PU', color: 'bg-pink-500' },
-        { id: 2, name: 'AnanyaSshri', score: 42, initials: 'AN', color: 'bg-green-500' },
-        { id: 3, name: 'bpmanna', score: 12, initials: 'BP', color: 'bg-green-500' },
-        { id: 4, name: 'amanna', score: 42, initials: 'AM', color: 'bg-green-500' },
-        { id: 5, name: 'anikb', score: 62, initials: 'AB', color: 'bg-green-500' },
-    ]);
+    const [friends, setFriends] = useState(initialValue)
+    const [totalFriends, setTotalFriends] = useState(0)
+
+    useEffect(() => {
+        getFriends()
+    }, [])
+
+    const getFriends = async () => {
+        try {
+            const res = await axios.request({
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: `${import.meta.env.VITE_API_URL}/friends/?chatId=${userId}`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (res && res.data && res.data.success == true) {
+                setFriends(res.data.friendLists)
+                setTotalFriends(res.data.totalFriends)
+                
+            }else {
+                console.log('error')
+                WebApp.showAlert("Failed to fetch Friends data!")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     function navigateFriends() {
         navigate('/friends')
     }
@@ -29,11 +55,17 @@ export function Friends() {
         navigate('/leaderboard')
     }
     async function handleInvite(){
-        console.log('skdnfkdsnf')
-        const referral_url = `https://t.me/toad_drop_bot?start=${userId}`
+        const referral_url = `${config.bot_link}?start=${userId}`
         const telegram_url = `https://t.me/share/url?url=${referral_url}`
         window.Telegram.WebApp.openTelegramLink(telegram_url)
     }
+
+    function getInitials(name) {
+        if(!name) return 'UF'
+        const alphabet = name.slice(0,1).toUpperCase()
+        return alphabet
+    }
+
     return (
         <div className="flex flex-col items-center bg-black text-white min-h-screen p-6">
             <div className="flex justify-center items-center w-full mb-8">
@@ -52,14 +84,14 @@ export function Friends() {
             </div>
 
             <div className="w-full mb-8">
-                <h3 className="text-xl mb-4">{friends.length} friends</h3>
-                {friends.map(friend => (
-                    <div key={friend.id} className="flex items-center justify-between mb-4">
+                <h3 className="text-xl mb-4">{totalFriends} friends</h3>
+                {friends.map((friend, index) => (
+                    <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
-                            <div className={`${friend.color} text-white w-10 h-10 rounded-full flex items-center justify-center`}>
-                                {friend.initials}
+                            <div className={`bg-pink-500 text-white w-10 h-10 rounded-full flex items-center justify-center`}>
+                                {friend.userName ? getInitials(friend.userName.toString()) : 'UF'}
                             </div>
-                            <p className="ml-4">{friend.name}</p>
+                            <p className="ml-4">{friend.userName? friend.userName : 'Unable to fetch'}</p>
                         </div>
                         <p>+{friend.score} TOADs</p>
                     </div>
@@ -74,7 +106,7 @@ export function Friends() {
                     <p className="mt-1">Earn</p>
                 </div>
                 <div onClick={navigateLeaderBoard} className="text-center text-white w-1/5 m-1 p-2 rounded-2xl">
-                    <img src={leaderBoard1} alt="Exchange" className="w-8 h-8 mx-auto" />
+                    <img src={leaderBoard} alt="Exchange" className="w-8 h-8 mx-auto" />
                     {/* <p className="w-8 h-8 mx-auto">🏆</p> */}
                     <p className="mt-1">Leaderboard</p>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
-import { leaderBoard, leaderBoard1 } from '../images';
+import { leaderBoard } from '../images';
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 import axios from 'axios';
@@ -154,7 +154,7 @@ export function Leaderboard() {
                     <p className="mt-1">Earn</p>
                 </div>
                 <div onClick={navigateLeaderBoard} className="text-center text-white w-1/5 m-1 p-2 rounded-2xl">
-                    <img src={leaderBoard1} alt="Exchange" className="w-8 h-8 mx-auto" />
+                    <img src={leaderBoard} alt="Exchange" className="w-8 h-8 mx-auto" />
                     {/* <p className="w-8 h-8 mx-auto">🏆</p> */}
                     <p className="mt-1">Leaderboard</p>
                 </div>

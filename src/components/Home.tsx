@@ -1,5 +1,5 @@
 import React from 'react';
-import { toadIcon, leaderBoard1 } from '../images';
+import { toadIcon, leaderBoard } from '../images';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
 import { useNavigate } from 'react-router-dom'
@@ -8,25 +8,20 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function Home() {
-    const initialValue = [
-        { answerText: '', isCorrect: false }];
-        const initialEarning = [
-            { type: '', score: 0 }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : 'iamAM96'
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
     const navigate = useNavigate()
+
+    const initialValue = [{ answerText: '', isCorrect: false }];
+    const initialEarning = [{ type: '', score: 0 }];
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
+
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
     const [todayQuestion, setTodayQuestion] = useState('')
     const [answerOptions, setAnswerOptions] = useState(initialValue)
     const [earnings, setEarnings] = useState(initialEarning)
-    const [friends, setFriends] = useState([
-        { id: 1, name: 'Joining Bonus', score: 100, initials: 'J', color: 'bg-pink-500' },
-        { id: 2, name: 'Trivia 21 Aug', score: 42, initials: 'T', color: 'bg-green-500' },
-        { id: 3, name: 'Trivia 22 Aug', score: 12, initials: 'T', color: 'bg-green-500' },
-        { id: 4, name: 'Trivia 23 Aug', score: 42, initials: 'T', color: 'bg-green-500' },
-        { id: 5, name: 'Trivia 01 Sept', score: 62, initials: 'T', color: 'bg-green-500' },
-    ]);
+    const [attempted, setAttempted] = useState(false)
+
     useEffect(() => {
         getQuestion()
         getEarnings()
@@ -34,56 +29,46 @@ export default function Home() {
 
 
     const getEarnings = async () => {
-        try{
-            const chatId = '1510838499' //7476023871 5772357885
-            const res = await axios.request({
-                method: 'get',
-                maxBodyLength: Infinity,
-                url: `${import.meta.env.VITE_API_URL}/earnings?chatId=${chatId}`,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            console.log(res)
-            if(res && res.data){
-                setEarnings(res.data.earnings)
-            }
-            else{
-                WebApp.showAlert("Failed to Fetch Earnings")
-            }
-        }catch(error){
-            console.log(error)
-        }
-    }
-    const getQuestion = async () => {
-        //const date = new Date().toISOString().replace(/\T.+/, '')
-        // console.log(date)
-        const date = '2024-08-01'
-        const chatId = '1510838499' //7476023871 5772357885
-        console.log(new Date().toDateString().split(' ').slice(0,3))
-        // console.log(`${import.meta.env.VITE_API_URL}/questions/get?date=${date}&chatId=${chatId}`)
         try {
             const res = await axios.request({
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: `${import.meta.env.VITE_API_URL}/questions/get?date=${date}&chatId=${chatId}`,
+                url: `${import.meta.env.VITE_API_URL}/earnings?chatId=${userId}`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
-            console.log(res)
-            // console.log(res.data)
-            if (res && res.data && res.data.success == true) {
-                // console.log(res.data)
-                const todaysPick = res.data
-                // console.log(todaysPick)
-                setTodayQuestion(todaysPick)
-                setAnswerOptions(res.data.answerOptions)
+            if (res && res.data) {
+                setEarnings(res.data.earnings)
             }
             else {
+                WebApp.showAlert("Failed to Fetch Earnings")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const getQuestion = async () => {
+        const date = new Date().toISOString().replace(/\T.+/, '')
+        // console.log(date)
+        //const date = '2024-08-01'
+
+        try {
+            const res = await axios.request({
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: `${import.meta.env.VITE_API_URL}/questions/get?date=${date}&chatId=${userId}`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            // console.log(res)
+            if (res && res.data && res.data.success == true) {
+                setTodayQuestion(res.data)
+                setAnswerOptions(res.data.answerOptions)
+            } else {
                 WebApp.showAlert("Failed to fetch Today's pick")
             }
-            console.log(todayQuestion)
         } catch (error) {
             console.log(error)
         }
@@ -100,7 +85,7 @@ export default function Home() {
         navigate('/leaderboard')
     }
     function joinChannel() {
-        window.Telegram.WebApp.openTelegramLink("https://t.me/pikapiichannel")
+        window.Telegram.WebApp.openTelegramLink("https://t.me/+utrjAP7nc7BhODg1")
     }
 
     const handleTrivia = async (option) => {
@@ -109,13 +94,14 @@ export default function Home() {
         console.log(new Date().toISOString().replace(/\T.+/, ''))
         setSelectedOption(option.answerText)
         console.log(option.isCorrect)
-        const chatId = '1510838499' //7476023871 5772357885
+
         if (option.isCorrect) {
             setIsCorrect(true)
         }
         else {
             setIsCorrect(false)
         }
+
         const res = await axios.request({
             method: 'post',
             maxBodyLength: Infinity,
@@ -125,21 +111,26 @@ export default function Home() {
             },
             data: {
                 questionId: todayQuestion.questionId,
-                userId: chatId,
+                userId: userId,
+                userName: userName,
                 selectedOption: selectedOption,
                 isCorrect: isCorrect
             }
         });
+        setAttempted(true)
     }
 
     function getInitials(type) {
-        // if(!name){
-        //     console.log('not valid')
-        // }
-        if(!type) return 'A'
-        console.log(type)
-        const alphabet = type.slice(0,1).toUpperCase()
+        if (!type) return 'A'
+        const alphabet = type.slice(0, 1).toUpperCase()
         return alphabet
+    }
+
+    function getColor(type) {
+        if (!type) return 'bg-blue-500'
+        if (type == 'Joining Bonus') return 'bg-green-500'
+        if (type == 'Referral') return 'bg-pink-500'
+        if (type == 'Trivia') return 'bg-violet-500'
     }
 
     return (
@@ -166,9 +157,9 @@ export default function Home() {
 
             <div className="flex flex-col bg-gray-800 p-6 rounded-lg mb-8 min-w-full">
                 <div>
-                    <div className='flex space-x-20 mb-5'>
-                        <p className='flex justify-start text-orange-300'>{`Difficulty: ${todayQuestion.difficulty}`}</p>
-                        <p className='flex justify-end text-green-300'>{`Toads: ${todayQuestion.score}`}</p>
+                    <div className='flex space-x-32 mb-5'>
+                        <p className='flex justify-start text-orange-300'>{todayQuestion.question ? `Difficulty: ${todayQuestion.difficulty}` : 'No trivia today'}</p>
+                        <p className='flex justify-end text-green-300'>{todayQuestion.question ? `Toads: +${todayQuestion.score}` : ''}</p>
                     </div>
                 </div>
                 {todayQuestion.question ? (
@@ -177,7 +168,7 @@ export default function Home() {
                         <div className="flex flex-col items-center space-y-2">
                             {answerOptions.map((option) => (
                                 <button
-                                    disabled={todayQuestion.responseStatus.length != 0}
+                                    disabled={attempted || todayQuestion.responseStatus.length != 0}
                                     key={option}
                                     onClick={() => handleTrivia(option)}
                                     className={`py-2 px-4 rounded-lg ${selectedOption === option ? (isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-blue-500 text-white'}`}
@@ -188,13 +179,38 @@ export default function Home() {
                         </div>
                         {todayQuestion.responseStatus.length != 0 ? (
                             <p className={'mt-4 font-bold text-violet-300'}>
-                                Already attempted today !
+                                Already attempted today
                             </p>
-                        ) : selectedOption && (
-                            <p className={`mt-4 font-bold ${selectedOption === todayQuestion.correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
-                                {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} Toads 🐸` : '😢 Try tomorrow again'}
-                            </p>
+                        ) : (
+                            (attempted && selectedOption) ? (
+                                <p className={`mt-4 font-bold ${selectedOption === todayQuestion.correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
+                                    {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} Toads 🐸` : '😢 Try tomorrow again'}
+                                </p>
+
+                            ) : attempted ? (
+                                <p className={'mt-4 font-bold text-violet-300'}>
+                                    Already attempted today 456!
+                                </p>
+                            ) : (
+                                <p className={'mt-4 font-bold text-violet-300'}>
+                                    Select one option
+                                </p>
+                            )
                         )}
+                        {/* {attempted && todayQuestion.responseStatus.length == 0 ?
+                            (
+                                selectedOption && (
+                                    <p className={`mt-4 font-bold ${selectedOption === todayQuestion.correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
+                                        {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} Toads 🐸` : '😢 Try tomorrow again'}
+                                    </p>
+                                )
+                            ) :
+                            (
+                                attempted && (<p className={'mt-4 font-bold text-violet-300'}>
+                                    Already attempted today !
+                                </p>
+                                )
+                            )} */}
 
                     </div>
                 ) :
@@ -212,7 +228,7 @@ export default function Home() {
                 {earnings.map((item, index) => (
                     <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
-                            <div className={`bg-violet-500 text-white w-10 h-10 rounded-full flex items-center justify-center`}>
+                            <div className={`${getColor(item.type)} text-white w-10 h-10 rounded-full flex items-center justify-center`}>
                                 {getInitials(item.type)}
                             </div>
                             <p className="ml-4">{`${item.type} ${item.time}`}</p>
@@ -222,13 +238,13 @@ export default function Home() {
                 ))}
             </div>
 
-            <div className="fixed bottom-0 w-full bg-blue-700 flex justify-around items-center text-xs mt-2">
+            <div className="fixed bottom-0 w-full bg-blue-700 flex justify-around items-center text-xs mt-4">
                 <div onClick={navigateHome} className="text-center text-white w-1/5">
                     <Coins className="w-8 h-8 mx-auto" />
                     <p className="mt-1">Earn</p>
                 </div>
                 <div onClick={navigateLeaderBoard} className="text-center text-white w-1/5 m-1 p-2 rounded-2xl">
-                    <img src={leaderBoard1} alt="Exchange" className="w-8 h-8 mx-auto" />
+                    <img src={leaderBoard} alt="Exchange" className="w-8 h-8 mx-auto" />
                     {/* <p className="w-8 h-8 mx-auto">🏆</p> */}
                     <p className="mt-1">Leaderboard</p>
                 </div>
