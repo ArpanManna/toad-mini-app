@@ -8,7 +8,7 @@ import axios from 'axios';
 import DynamicLogo from './DynamicLogo'
 
 export function Leaderboard() {
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : 'iamAM96'
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
     console.log(userName)
     console.log(userId)
@@ -25,11 +25,10 @@ export function Leaderboard() {
     }, [])
 
     const getLeaders = async () => {
-        const chatId = '1510838499'
         const res = await axios.request({
             method: 'get',
             maxBodyLength: Infinity,
-            url: `${import.meta.env.VITE_API_URL}/leaders?chatId=${chatId}`,
+            url: `${import.meta.env.VITE_API_URL}/leaders?chatId=${userId}`,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -44,12 +43,7 @@ export function Leaderboard() {
         console.log(leaders)
         console.log(getRandomColor())
     }
-    const [topHolders, setTopHolders] = useState([
-        { id: 1, name: 'elkanadi', dogs: 18470451, initials: 'EL', color: 'bg-blue-500', medal: '🥇' },
-        { id: 2, name: 'glebtma', dogs: 16671885, initials: 'GL', color: 'bg-pink-500', medal: '🥈' },
-        { id: 3, name: 'Esalat', dogs: 13342157, initials: 'ES', color: 'bg-blue-700', medal: '🥉' },
-        { id: 4, name: 'imGet', dogs: 12308949, initials: 'IM', color: 'bg-yellow-500', medal: '#4' },
-    ]);
+
     function navigateFriends() {
         navigate('/friends')
     }

@@ -139,7 +139,7 @@ export default function Home() {
                 <img src={toadIcon} alt="Toad" className="w-24 h-24 rounded-full" />
             </div>
             <div className="text-center mb-4">
-                <h1 className="text-3xl">{todayQuestion.balance}</h1>
+                <h1 className="text-3xl">{todayQuestion.balance? (todayQuestion.balance).toLocaleString() : 0}</h1>
                 <p className="text-xl">TOADs</p>
             </div>
 
@@ -155,9 +155,9 @@ export default function Home() {
 
             </div>
 
-            <div className="flex flex-col bg-gray-800 p-6 rounded-lg mb-8 min-w-full">
+            <div className="flex flex-col bg-gray-900 p-6 rounded-lg mb-8 min-w-full">
                 <div>
-                    <div className='flex space-x-32 mb-5'>
+                    <div className='flex space-x-36 mb-5'>
                         <p className='flex justify-start text-orange-300'>{todayQuestion.question ? `Difficulty: ${todayQuestion.difficulty}` : 'No trivia today'}</p>
                         <p className='flex justify-end text-green-300'>{todayQuestion.question ? `Toads: +${todayQuestion.score}` : ''}</p>
                     </div>

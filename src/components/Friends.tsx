@@ -70,7 +70,7 @@ export function Friends() {
         <div className="flex flex-col items-center bg-black text-white min-h-screen p-6">
             <div className="flex justify-center items-center w-full mb-8">
                 <h1 className="text-2xl flex items-center">
-                    Toad <span className="ml-2 text-2xl">🐾</span>
+                    Toad <span className="ml-2 text-2xl">🐸</span>
                 </h1>
             </div>
 
