@@ -11,8 +11,8 @@ export function Friends() {
     
     const navigate = useNavigate()
     const initialValue = [
-        { userName: '', score: 0 }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
+        { userName: 'No Friends till now', score: 0 }];
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '7130031779'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
     const [friends, setFriends] = useState(initialValue)
     const [totalFriends, setTotalFriends] = useState(0)
@@ -68,11 +68,6 @@ export function Friends() {
 
     return (
         <div className="flex flex-col items-center bg-black text-white min-h-screen p-6">
-            <div className="flex justify-center items-center w-full mb-8">
-                <h1 className="text-2xl flex items-center">
-                    Toad <span className="ml-2 text-2xl">🐸</span>
-                </h1>
-            </div>
 
             <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold">Invite friends</h2>
@@ -80,7 +75,7 @@ export function Friends() {
                 <div className="flex justify-center mt-4">
                     <img src={toadIcon} alt="Toad" className="w-24 h-24 rounded-full" />
                 </div>
-                <button onClick={handleInvite} className="bg-white text-black py-2 px-4 rounded-full mb-8">Invite friends</button>
+                <button onClick={handleInvite} className="bg-white text-black py-2 px-4 rounded-full mb-8 font-bold">Invite friends</button>
             </div>
 
             <div className="w-full mb-8">
@@ -93,7 +88,7 @@ export function Friends() {
                             </div>
                             <p className="ml-4">{friend.userName? friend.userName : 'Unable to fetch'}</p>
                         </div>
-                        <p>+{friend.score} TOADs</p>
+                        <p>+{friend.score} TOAD</p>
                     </div>
                 ))}
             </div>

@@ -76,9 +76,9 @@ export function Leaderboard() {
         // if(!name){
         //     console.log('not valid')
         // }
-        if(!name) return 'A'
+        if (!name) return 'A'
         console.log(name)
-        const alphabet = name.slice(0,2).toUpperCase()
+        const alphabet = name.slice(0, 2).toUpperCase()
         return alphabet
     }
 
@@ -86,30 +86,24 @@ export function Leaderboard() {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
+            color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
-      }
+    }
 
-    function getRankSymbol(index){
-        if(index == 0){
+    function getRankSymbol(index) {
+        if (index == 0) {
             return '🥇'
         }
-        if(index == 1){
+        if (index == 1) {
             return '🥈'
         }
-        if(index == 2) return '🥉'
+        if (index == 2) return '🥉'
         return `#${Number(index) + 1}`
     }
     return (
         <div className="flex flex-col items-center bg-black text-white min-h-screen p-6 min-w-full">
-            <header className="flex justify-between items-center w-full mb-8">
-                <button className="text-white text-2xl">&larr;</button>
-                <h1 className="text-2xl flex items-center">
-                    Toads <span className="ml-2 text-2xl">🐸</span>
-                </h1>
-                <button className="text-white text-2xl">&#8942;</button>
-            </header>
+
 
             <div className="text-center mb-8 w-full">
                 <h2 className="text-2xl font-bold">Wall of Fame</h2>
@@ -130,12 +124,15 @@ export function Leaderboard() {
                 {leaders.map((holder, index) => (
                     <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
-                            <div className= {`bg-violet-700 text-white w-10 h-10 rounded-full flex items-center justify-center`}>
+                            <div className={`bg-violet-700 text-white w-10 h-10 rounded-full flex items-center justify-center`}>
                                 {getInitials(holder.userName)}
                             </div>
-                            <p className="ml-4">{holder.userName}</p>
+                            <div>
+                                <p className="ml-5 font-bold">{holder.userName}</p>
+                                <p className='ml-5 text-gray-400 font-bold'>{holder.balance ? holder.balance.toLocaleString() : 0} TOAD</p>
+                            </div>
                         </div>
-                        <p>{holder.balance} TOADS</p>
+
                         <p>{getRankSymbol(index)}</p>
                     </div>
                 ))}

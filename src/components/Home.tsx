@@ -1,5 +1,5 @@
 import React from 'react';
-import { toadIcon, leaderBoard } from '../images';
+import { toadIcon, leaderBoard, logo } from '../images';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
 import { useNavigate } from 'react-router-dom'
@@ -11,10 +11,10 @@ export default function Home() {
     const navigate = useNavigate()
 
     const initialValue = [{ answerText: '', isCorrect: false }];
-    const initialEarning = [{ type: '', score: 0 }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
+    const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }]; //5772357885 7130031779
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '7130031779'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
-
+    // '1510838499'
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
     const [todayQuestion, setTodayQuestion] = useState('')
@@ -29,6 +29,7 @@ export default function Home() {
 
 
     const getEarnings = async () => {
+        console.log(`${import.meta.env.VITE_API_URL}/earnings?chatId=${userId}`)
         try {
             const res = await axios.request({
                 method: 'get',
@@ -47,6 +48,7 @@ export default function Home() {
         } catch (error) {
             console.log(error)
         }
+        
     }
     const getQuestion = async () => {
         const date = new Date().toISOString().replace(/\T.+/, '')
@@ -136,11 +138,11 @@ export default function Home() {
     return (
         <div className="flex flex-col items-center justify-around h-full w-full bg-black text-white p-4">
             <div>
-                <img src={toadIcon} alt="Toad" className="w-24 h-24 rounded-full" />
+                <img src={logo} alt="Toad" className="w-24 h-24 rounded-full" />
             </div>
             <div className="text-center mb-4">
                 <h1 className="text-3xl">{todayQuestion.balance? (todayQuestion.balance).toLocaleString() : 0}</h1>
-                <p className="text-xl">TOADs</p>
+                <p className="text-xl">TOAD</p>
             </div>
 
             <div className="flex flex-col bg-gray-800 p-4 rounded-lg mb-4 min-w-full">
@@ -159,7 +161,7 @@ export default function Home() {
                 <div>
                     <div className='flex space-x-36 mb-5'>
                         <p className='flex justify-start text-orange-300'>{todayQuestion.question ? `Difficulty: ${todayQuestion.difficulty}` : 'No trivia today'}</p>
-                        <p className='flex justify-end text-green-300'>{todayQuestion.question ? `Toads: +${todayQuestion.score}` : ''}</p>
+                        <p className='flex justify-end text-green-300'>{todayQuestion.question ? `Toad: +${todayQuestion.score}` : ''}</p>
                     </div>
                 </div>
                 {todayQuestion.question ? (
@@ -233,7 +235,7 @@ export default function Home() {
                             </div>
                             <p className="ml-4">{`${item.type} ${item.time}`}</p>
                         </div>
-                        <p>+{item.score} TOADs</p>
+                        <p>+{item.score} TOAD</p>
                     </div>
                 ))}
             </div>
