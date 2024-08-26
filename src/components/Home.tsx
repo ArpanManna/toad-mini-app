@@ -115,8 +115,8 @@ export default function Home() {
                 questionId: todayQuestion.questionId,
                 userId: userId,
                 userName: userName,
-                selectedOption: selectedOption,
-                isCorrect: isCorrect
+                selectedOption: option.answerText,
+                isCorrect: option.isCorrect
             })
         });
         setAttempted(true)
