@@ -12,7 +12,7 @@ export default function Home() {
 
     const initialValue = [{ answerText: '', isCorrect: false }];
     const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }]; //5772357885 7130031779
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '7130031779'
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '5772357885'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
     // '1510838499'
     const [selectedOption, setSelectedOption] = useState(null)
@@ -111,13 +111,13 @@ export default function Home() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: {
+            data: JSON.stringify({
                 questionId: todayQuestion.questionId,
                 userId: userId,
                 userName: userName,
                 selectedOption: selectedOption,
                 isCorrect: isCorrect
-            }
+            })
         });
         setAttempted(true)
     }
