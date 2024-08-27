@@ -12,7 +12,7 @@ export function Friends() {
     const navigate = useNavigate()
     const initialValue = [
         { userName: 'No Friends till now', score: 0 }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '7130031779'
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '5772357885'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
     const [friends, setFriends] = useState(initialValue)
     const [totalFriends, setTotalFriends] = useState(0)
@@ -71,7 +71,7 @@ export function Friends() {
 
             <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold">Invite friends</h2>
-                <p className="text-2xl">and get more TOAD</p>
+                <p className="text-xl">and collect more TOAD</p>
                 <div className="flex justify-center mt-4">
                     <img src={toadIcon} alt="Toad" className="w-24 h-24 rounded-full" />
                 </div>
@@ -79,7 +79,7 @@ export function Friends() {
             </div>
 
             <div className="w-full mb-8">
-                <h3 className="text-xl mb-4">{totalFriends} friends</h3>
+                <h3 className="text-xl mb-4 text-gray-300">{totalFriends? `${totalFriends} friends`: 'No friends till now'} </h3>
                 {friends.map((friend, index) => (
                     <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
@@ -92,7 +92,6 @@ export function Friends() {
                     </div>
                 ))}
             </div>
-
 
 
             <div className="fixed bottom-0 w-full bg-blue-700 flex justify-around items-center text-xs">

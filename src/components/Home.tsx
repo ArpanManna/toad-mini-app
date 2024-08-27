@@ -29,12 +29,12 @@ export default function Home() {
 
 
     const getEarnings = async () => {
-        console.log(`${import.meta.env.VITE_API_URL}/earnings?chatId=${userId}`)
+        console.log(`${import.meta.env.VITE_API_URL}/earnings?chatId=${userId}&userName=${userName}`)
         try {
             const res = await axios.request({
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: `${import.meta.env.VITE_API_URL}/earnings?chatId=${userId}`,
+                url: `${import.meta.env.VITE_API_URL}/earnings?chatId=${userId}&userName=${userName}`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -170,7 +170,7 @@ export default function Home() {
                         <div className="flex flex-col items-center space-y-2">
                             {answerOptions.map((option) => (
                                 <button
-                                    disabled={attempted || todayQuestion.responseStatus.length != 0}
+                                    disabled={attempted || todayQuestion.responseStatus.responses.length != 0}
                                     key={option}
                                     onClick={() => handleTrivia(option)}
                                     className={`py-2 px-4 rounded-lg ${selectedOption === option ? (isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-blue-500 text-white'}`}
@@ -179,7 +179,7 @@ export default function Home() {
                                 </button>
                             ))}
                         </div>
-                        {todayQuestion.responseStatus.length != 0 ? (
+                        {todayQuestion.responseStatus.responses.length != 0 ? (
                             <p className={'mt-4 font-bold text-violet-300'}>
                                 Already attempted today
                             </p>
@@ -199,20 +199,6 @@ export default function Home() {
                                 </p>
                             )
                         )}
-                        {/* {attempted && todayQuestion.responseStatus.length == 0 ?
-                            (
-                                selectedOption && (
-                                    <p className={`mt-4 font-bold ${selectedOption === todayQuestion.correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
-                                        {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} Toads 🐸` : '😢 Try tomorrow again'}
-                                    </p>
-                                )
-                            ) :
-                            (
-                                attempted && (<p className={'mt-4 font-bold text-violet-300'}>
-                                    Already attempted today !
-                                </p>
-                                )
-                            )} */}
 
                     </div>
                 ) :
@@ -226,16 +212,20 @@ export default function Home() {
                 <h2 className="text">💰 Earnings</h2>
 
             </div>
-            <div className="w-full">
+            <div className="w-full mb-8">
                 {earnings.map((item, index) => (
                     <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
                             <div className={`${getColor(item.type)} text-white w-10 h-10 rounded-full flex items-center justify-center`}>
                                 {getInitials(item.type)}
                             </div>
-                            <p className="ml-4">{`${item.type} ${item.time}`}</p>
+                            <div>
+                            <p className="ml-6">{item.type}</p>
+                            <p className="ml-6 text-gray-400">{item.time}</p>
+                                </div>
+                           
                         </div>
-                        <p>+{item.score} TOAD</p>
+                        <p>+{item.score? item.score.toLocaleString(): 0} TOAD</p>
                     </div>
                 ))}
             </div>

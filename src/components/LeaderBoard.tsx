@@ -129,7 +129,7 @@ export function Leaderboard() {
                             </div>
                             <div>
                                 <p className="ml-5 font-bold">{holder.userName}</p>
-                                <p className='ml-5 text-gray-400 font-bold'>{holder.balance ? holder.balance.toLocaleString() : 0} TOAD</p>
+                                <p className='ml-5 text-gray-400'>{holder.balance ? holder.balance.toLocaleString() : 0} TOAD</p>
                             </div>
                         </div>
 
