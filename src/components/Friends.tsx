@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
-import { leaderBoard, toadIcon } from '../images';
+import { leaderBoard, toadIcon, logo } from '../images';
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
-import {config} from '../../config.js';
+import { config } from '../../config.js';
 import axios from 'axios';
 
 export function Friends() {
-    
+
     const navigate = useNavigate()
     const initialValue = [
         { userName: 'No Friends till now', score: 0 }];
@@ -35,8 +35,8 @@ export function Friends() {
             if (res && res.data && res.data.success == true) {
                 setFriends(res.data.friendLists)
                 setTotalFriends(res.data.totalFriends)
-                
-            }else {
+
+            } else {
                 console.log('error')
                 WebApp.showAlert("Failed to fetch Friends data!")
             }
@@ -54,39 +54,40 @@ export function Friends() {
     function navigateLeaderBoard() {
         navigate('/leaderboard')
     }
-    async function handleInvite(){
+    async function handleInvite() {
         const referral_url = `${config.bot_link}?start=${userId}`
         const telegram_url = `https://t.me/share/url?url=${referral_url}`
         window.Telegram.WebApp.openTelegramLink(telegram_url)
     }
 
     function getInitials(name) {
-        if(!name) return 'UF'
-        const alphabet = name.slice(0,1).toUpperCase()
+        if (!name) return 'UF'
+        const alphabet = name.slice(0, 1).toUpperCase()
         return alphabet
     }
 
     return (
-        <div className="flex flex-col items-center bg-black text-white min-h-screen p-6">
-
-            <div className="text-center mb-8">
+        <div className="flex flex-col items-center bg-black text-white min-h-screen p-4">
+            <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
+                <img src={logo} alt="Toad" className='object-scale-down w-full h-full' />
+            </div>
+            <div className="text-center mb-4 mt-4">
                 <h2 className="text-2xl font-bold">Invite friends</h2>
-                <p className="text-xl">and collect more TOAD</p>
-                <div className="flex justify-center mt-4">
-                    <img src={toadIcon} alt="Toad" className="w-24 h-24 rounded-full" />
-                </div>
+                <p className="text-xl">and</p>
+                <p className="text-xl font-bold mb-4 text-green-300">collect more TOAD</p>
+
                 <button onClick={handleInvite} className="bg-white text-black py-2 px-4 rounded-full mb-8 font-bold">Invite friends</button>
             </div>
 
             <div className="w-full mb-8">
-                <h3 className="text-xl mb-4 text-gray-300">{totalFriends? `${totalFriends} friends`: 'No friends till now'} </h3>
+                <h3 className="text-xl mb-4 text-gray-300">{totalFriends ? `${totalFriends} friends` : 'No friends till now'} </h3>
                 {friends.map((friend, index) => (
                     <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
                             <div className={`bg-pink-500 text-white w-10 h-10 rounded-full flex items-center justify-center`}>
                                 {friend.userName ? getInitials(friend.userName.toString()) : 'UF'}
                             </div>
-                            <p className="ml-4">{friend.userName? friend.userName : 'Unable to fetch'}</p>
+                            <p className="ml-4">{friend.userName ? friend.userName : 'Unable to fetch'}</p>
                         </div>
                         <p>+{friend.score} TOAD</p>
                     </div>

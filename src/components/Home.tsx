@@ -1,5 +1,5 @@
 import React from 'react';
-import { toadIcon, leaderBoard, logo } from '../images';
+import { leaderBoard, logo } from '../images';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
 import { useNavigate } from 'react-router-dom'
@@ -29,7 +29,6 @@ export default function Home() {
 
 
     const getEarnings = async () => {
-        console.log(`${import.meta.env.VITE_API_URL}/earnings?chatId=${userId}&userName=${userName}`)
         try {
             const res = await axios.request({
                 method: 'get',
@@ -52,9 +51,6 @@ export default function Home() {
     }
     const getQuestion = async () => {
         const date = new Date().toISOString().replace(/\T.+/, '')
-        // console.log(date)
-        //const date = '2024-08-01'
-
         try {
             const res = await axios.request({
                 method: 'get',
@@ -64,7 +60,7 @@ export default function Home() {
                     'Content-Type': 'application/json'
                 },
             });
-            // console.log(res)
+
             if (res && res.data && res.data.success == true) {
                 setTodayQuestion(res.data)
                 setAnswerOptions(res.data.answerOptions)
@@ -91,12 +87,7 @@ export default function Home() {
     }
 
     const handleTrivia = async (option) => {
-        console.log(todayQuestion)
-        console.log(option.answerText)
-        console.log(new Date().toISOString().replace(/\T.+/, ''))
         setSelectedOption(option.answerText)
-        console.log(option.isCorrect)
-
         if (option.isCorrect) {
             setIsCorrect(true)
         }
@@ -137,10 +128,10 @@ export default function Home() {
 
     return (
         <div className="flex flex-col items-center justify-around h-full w-full bg-black text-white p-4">
-            <div>
-                <img src={logo} alt="Toad" className="w-24 h-24 rounded-full" />
+            <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
+                <img src={logo} alt="Toad" className='object-scale-down w-full h-full'/>
             </div>
-            <div className="text-center mb-4">
+            <div className="text-center mt-4 mb-4">
                 <h1 className="text-3xl">{todayQuestion.balance? (todayQuestion.balance).toLocaleString() : 0}</h1>
                 <p className="text-xl">TOAD</p>
             </div>

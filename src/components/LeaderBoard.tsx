@@ -10,8 +10,7 @@ import DynamicLogo from './DynamicLogo'
 export function Leaderboard() {
     const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
-    console.log(userName)
-    console.log(userId)
+
     const initialValue = [
         { userName: '', balance: 0 }];
     const navigate = useNavigate()
@@ -33,15 +32,14 @@ export function Leaderboard() {
                 'Content-Type': 'application/json'
             },
         });
-        console.log(res)
+
         if (res && res.data && res.status == 200) {
             setUserBalance(res.data.userBalance)
             setUserRank(res.data.userRank)
             setHolders(convertToInternationalCurrencySystem(res.data.holders))
             setLeaders(res.data.leaderboard)
         }
-        console.log(leaders)
-        console.log(getRandomColor())
+
     }
 
     function navigateFriends() {
@@ -73,11 +71,7 @@ export function Leaderboard() {
     }
 
     function getInitials(name) {
-        // if(!name){
-        //     console.log('not valid')
-        // }
         if (!name) return 'A'
-        console.log(name)
         const alphabet = name.slice(0, 2).toUpperCase()
         return alphabet
     }
