@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { config } from '../../config';
 
 export default function Home() {
     const navigate = useNavigate()
@@ -47,7 +48,7 @@ export default function Home() {
         } catch (error) {
             console.log(error)
         }
-        
+
     }
     const getQuestion = async () => {
         const date = new Date().toISOString().replace(/\T.+/, '')
@@ -129,10 +130,10 @@ export default function Home() {
     return (
         <div className="flex flex-col items-center justify-around h-full w-full bg-black text-white p-4">
             <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
-                <img src={logo} alt="Toad" className='object-scale-down w-full h-full'/>
+                <img src={logo} alt="Toad" className='object-scale-down w-full h-full' />
             </div>
             <div className="text-center mt-4 mb-4">
-                <h1 className="text-3xl">{todayQuestion.balance? (todayQuestion.balance).toLocaleString() : 0}</h1>
+                <h1 className="text-3xl text-green-300">{todayQuestion.balance ? (todayQuestion.balance).toLocaleString() : 0}</h1>
                 <p className="text-xl">TOAD</p>
             </div>
 
@@ -140,7 +141,11 @@ export default function Home() {
                 <div className="text-left">
                     <h2 className="text-xl mb-1">TOAD COMMUNITY</h2>
                     <p className="text-sm mb-2">Home for Telegram OGs</p>
-                    <button onClick={joinChannel} className="bg-white text-black py-1 px-4 rounded-full">Join</button>
+                    <div className='flex justify-between'>
+                        <button onClick={joinChannel} className="bg-white text-black py-1 px-4 rounded-full">Join</button>
+                        <p className="text-sm text-green-300">{`+ ${config.joiningBonus} TOAD`}</p>
+                    </div>
+
                 </div>
             </div>
             <div className="flex min-w-full mb-4">
@@ -150,9 +155,9 @@ export default function Home() {
 
             <div className="flex flex-col bg-gray-900 p-6 rounded-lg mb-8 min-w-full">
                 <div>
-                    <div className='flex space-x-36 mb-5'>
-                        <p className='flex justify-start text-orange-300'>{todayQuestion.question ? `Difficulty: ${todayQuestion.difficulty}` : 'No trivia today'}</p>
-                        <p className='flex justify-end text-green-300'>{todayQuestion.question ? `Toad: +${todayQuestion.score}` : ''}</p>
+                    <div className='flex justify-between space-x-28 mb-5'>
+                        <p className='flex text-orange-300'>{todayQuestion.question ? `Difficulty: ${todayQuestion.difficulty}` : 'No trivia today'}</p>
+                        <p className='flex text-green-300'>{todayQuestion.question ? `+${todayQuestion.score} TOAD` : ''}</p>
                     </div>
                 </div>
                 {todayQuestion.question ? (
@@ -211,12 +216,12 @@ export default function Home() {
                                 {getInitials(item.type)}
                             </div>
                             <div>
-                            <p className="ml-6">{item.type}</p>
-                            <p className="ml-6 text-gray-400">{item.time}</p>
-                                </div>
-                           
+                                <p className="ml-6">{item.type}</p>
+                                <p className="ml-6 text-gray-400">{item.time}</p>
+                            </div>
+
                         </div>
-                        <p>+{item.score? item.score.toLocaleString(): 0} TOAD</p>
+                        <p>+{item.score ? item.score.toLocaleString() : 0} TOAD</p>
                     </div>
                 ))}
             </div>

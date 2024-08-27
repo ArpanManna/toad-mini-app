@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 import axios from 'axios';
 import DynamicLogo from './DynamicLogo'
+import { logo } from '../images';
+
 
 export function Leaderboard() {
     const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
@@ -96,10 +98,12 @@ export function Leaderboard() {
         return `#${Number(index) + 1}`
     }
     return (
-        <div className="flex flex-col items-center bg-black text-white min-h-screen p-6 min-w-full">
+        <div className="flex flex-col items-center bg-black text-white min-h-screen p-4 min-w-full">
+            <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
+                <img src={logo} alt="Toad" className='object-scale-down w-full h-full'/>
+            </div>
 
-
-            <div className="text-center mb-8 w-full">
+            <div className="text-center mt-4 mb-4 w-full text-green-300">
                 <h2 className="text-2xl font-bold">Wall of Fame</h2>
                 <div className="flex items-center justify-between bg-gray-800 p-4 rounded-lg mt-4">
                     <div className="flex items-center">
@@ -114,7 +118,7 @@ export function Leaderboard() {
             </div>
 
             <div className="w-full mb-8">
-                <h3 className="text-xl mb-4">{`${holders} holders`}</h3>
+                <h3 className="text-xl mb-4 font-bold">{holders? `${holders.toLocaleString()} holders`: ''}</h3>
                 {leaders.map((holder, index) => (
                     <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">

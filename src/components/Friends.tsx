@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
-import { leaderBoard, toadIcon, logo } from '../images';
+import { leaderBoard, logo } from '../images';
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 import { config } from '../../config.js';
@@ -80,7 +80,12 @@ export function Friends() {
             </div>
 
             <div className="w-full mb-8">
-                <h3 className="text-xl mb-4 text-gray-300">{totalFriends ? `${totalFriends} friends` : 'No friends till now'} </h3>
+                {totalFriends ? (
+                    <h3 className="text-xl mb-4 font-semibold">{`${totalFriends} friends`} </h3>
+                ) : (
+                    <h3 className="items-center text-xl ml-4 mb-4 font-semibold font-sans"> </h3>
+                )}
+
                 {friends.map((friend, index) => (
                     <div key={index} className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
