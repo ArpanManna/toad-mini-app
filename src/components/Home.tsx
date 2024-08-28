@@ -84,7 +84,7 @@ export default function Home() {
         navigate('/leaderboard')
     }
     function joinChannel() {
-        window.Telegram.WebApp.openTelegramLink("https://t.me/+utrjAP7nc7BhODg1")
+        window.Telegram.WebApp.openTelegramLink(config.community_group_link)
     }
 
     const handleTrivia = async (option) => {
