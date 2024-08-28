@@ -12,10 +12,10 @@ export default function Home() {
     const navigate = useNavigate()
 
     const initialValue = [{ answerText: '', isCorrect: false }];
-    const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }]; //5772357885 7130031779
+    const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }]; 
     const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
-    // '1510838499'
+    
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
     const [todayQuestion, setTodayQuestion] = useState('')
@@ -48,8 +48,8 @@ export default function Home() {
         } catch (error) {
             console.log(error)
         }
-
     }
+    
     const getQuestion = async () => {
         const date = new Date().toISOString().replace(/\T.+/, '')
         try {

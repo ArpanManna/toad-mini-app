@@ -3,9 +3,7 @@ import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
 import { leaderBoard } from '../images';
 import { useNavigate } from 'react-router-dom'
-import WebApp from '@twa-dev/sdk'
 import axios from 'axios';
-import DynamicLogo from './DynamicLogo'
 import { logo } from '../images';
 
 

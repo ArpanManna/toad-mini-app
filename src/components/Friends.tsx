@@ -12,7 +12,7 @@ export function Friends() {
     const navigate = useNavigate()
     const initialValue = [
         { userName: 'No Friends till now', score: 0 }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '5772357885'
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
     const [friends, setFriends] = useState(initialValue)
     const [totalFriends, setTotalFriends] = useState(0)

@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client'
 import { TonConnectUIProvider } from "@tonconnect/ui-react"
 import App from './App.tsx'
 import WebApp from '@twa-dev/sdk'
-import eruda from 'eruda'
+// import eruda from 'eruda'
 import './index.css'
 
 
 WebApp.ready();
-eruda.init()
+// eruda.init()
 
 const IPFS_URL = import.meta.env.VITE_IPFS_URL
 const manifestUrl = IPFS_URL;
