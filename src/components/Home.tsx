@@ -12,16 +12,17 @@ export default function Home() {
     const navigate = useNavigate()
 
     const initialValue = [{ answerText: '', isCorrect: false }];
-    const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }]; 
+    const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
     const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'iamAM96'
-    
+
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
     const [todayQuestion, setTodayQuestion] = useState('')
     const [answerOptions, setAnswerOptions] = useState(initialValue)
     const [earnings, setEarnings] = useState(initialEarning)
     const [attempted, setAttempted] = useState(false)
+    const [member, setMember] = useState(false)
 
     useEffect(() => {
         getQuestion()
@@ -49,7 +50,7 @@ export default function Home() {
             console.log(error)
         }
     }
-    
+
     const getQuestion = async () => {
         const date = new Date().toISOString().replace(/\T.+/, '')
         try {
@@ -61,10 +62,11 @@ export default function Home() {
                     'Content-Type': 'application/json'
                 },
             });
-
+            console.log(res)
             if (res && res.data && res.data.success == true) {
                 setTodayQuestion(res.data)
                 setAnswerOptions(res.data.answerOptions)
+                setMember(res.data.member)
             } else {
                 WebApp.showAlert("Failed to fetch Today's pick")
             }
@@ -83,8 +85,40 @@ export default function Home() {
     function navigateLeaderBoard() {
         navigate('/leaderboard')
     }
-    function joinChannel() {
+    async function joinChannel() {
         window.Telegram.WebApp.openTelegramLink(config.community_group_link)
+    }
+
+    async function checkMemberStatus() {
+        if(member) return
+        try {
+            const res = await axios.request({
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: `${config.telegramApiUrl}/bot${import.meta.env.VITE_BOT_TOKEN}/getChatMember?chat_id=${config.channelId}&user_id=${userId}`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            console.log(res)
+            if (res && res.data.ok && res.data.result.status) {
+                setMember(true)
+                const res = await axios.request({
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: `${import.meta.env.VITE_API_URL}/membership`,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        userId: userId.toString(),
+                        userName: userName.toString(),
+                    })
+                });
+            }
+        } catch (err) {
+            // WebApp.showAlert('Join Toad Community Channel')
+        }
     }
 
     const handleTrivia = async (option) => {
@@ -142,8 +176,8 @@ export default function Home() {
                     <h2 className="text-xl mb-1">TOAD COMMUNITY</h2>
                     <p className="text-sm mb-2">Home for Telegram OGs</p>
                     <div className='flex justify-between'>
-                        <button onClick={joinChannel} className="bg-white text-black py-1 px-4 rounded-full">Join</button>
-                        <p className="text-sm text-green-300">{`+ ${config.joiningBonus} TOAD`}</p>
+                        <button onClick={joinChannel} className="bg-white text-black py-1 px-4 rounded-full">{member ? 'Open' : 'Join'}</button>
+                        <p onClick={checkMemberStatus} className="text-sm text-green-300">{member ? `+${config.joiningBonus} Added` : `Claim ${config.joiningBonus} TOAD`}</p>
                     </div>
 
                 </div>
