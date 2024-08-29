@@ -101,7 +101,7 @@ export default function Home() {
                 },
             });
             console.log(res)
-            if (res && res.data.ok && res.data.result.status) {
+            if (res && res.data.ok && res.data.result.status == "member") {
                 setMember(true)
                 const res = await axios.request({
                     method: 'post',
