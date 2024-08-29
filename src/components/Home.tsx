@@ -86,7 +86,7 @@ export default function Home() {
         navigate('/leaderboard')
     }
     async function joinChannel() {
-        window.Telegram.WebApp.openTelegramLink(config.community_group_link)
+        window.Telegram.WebApp.openTelegramLink(config.community_channel_link)
     }
 
     async function checkMemberStatus() {
@@ -177,7 +177,7 @@ export default function Home() {
                     <p className="text-sm mb-2">Home for Telegram OGs</p>
                     <div className='flex justify-between'>
                         <button onClick={joinChannel} className="bg-white text-black py-1 px-4 rounded-full">{member ? 'Open' : 'Join'}</button>
-                        <p onClick={checkMemberStatus} className="text-sm text-green-300">{member ? `+${config.joiningBonus} Added` : `Claim ${config.joiningBonus} TOAD`}</p>
+                        <p onClick={checkMemberStatus} className="text-sm text-green-300">{member ? `+${config.joiningBonus} ✅` : `Claim ${config.joiningBonus} TOAD`}</p>
                     </div>
 
                 </div>
