@@ -8,9 +8,8 @@ import { logo } from '../images';
 
 
 export function Leaderboard() {
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username
-
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
     const initialValue = [
         { userName: '', balance: 0 }];
     const navigate = useNavigate()
