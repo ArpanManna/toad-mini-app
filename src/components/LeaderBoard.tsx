@@ -109,7 +109,7 @@ export function Leaderboard() {
                         </div>
                         <p className="ml-4">{userName}</p>
                     </div>
-                    <p>{`${userBalance.toLocaleString()} 🐸`}</p>
+                    <p>{`${userBalance.toLocaleString()} TOAD`}</p>
                     <p>#{userRank}</p>
                 </div>
             </div>

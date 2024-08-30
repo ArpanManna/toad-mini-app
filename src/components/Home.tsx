@@ -90,7 +90,7 @@ export default function Home() {
     }
 
     async function checkMemberStatus() {
-        if(member) return
+        if (member) return
         try {
             const res = await axios.request({
                 method: 'get',
@@ -177,7 +177,11 @@ export default function Home() {
                     <p className="text-sm mb-2">Home for Telegram OGs</p>
                     <div className='flex justify-between'>
                         <button onClick={joinChannel} className="bg-white text-black py-1 px-4 rounded-full">{member ? 'Open' : 'Join'}</button>
-                        <p onClick={checkMemberStatus} className="text-sm text-green-300">{member ? `+${config.joiningBonus} ✅` : `Claim ${config.joiningBonus} TOAD`}</p>
+                        {member ? (
+                            <p className="text-sm text-green-300">{`+${config.joiningBonus} TOAD`}</p>
+                        ) : (
+                            <button onClick={checkMemberStatus} className='bg-gray-700 text-white rounded-full py-1 px-4'>{`Claim +${config.joiningBonus}`}</button>
+                        )}
                     </div>
 
                 </div>
@@ -216,7 +220,7 @@ export default function Home() {
                         ) : (
                             (attempted && selectedOption) ? (
                                 <p className={`mt-4 font-bold ${selectedOption === todayQuestion.correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
-                                    {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} Toads 🐸` : '😢 Try tomorrow again'}
+                                    {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} TOAD` : '😢 Try tomorrow again'}
                                 </p>
 
                             ) : attempted ? (
