@@ -144,7 +144,7 @@ export default function Home() {
                 userId: userId.toString(),
                 userName: userName.toString(),
                 selectedOption: option.answerText.toString(),
-                isCorrect: option.isCorrect.toString()
+                isCorrect: option.isCorrect
             })
         });
         setAttempted(true)
