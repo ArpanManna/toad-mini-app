@@ -13,8 +13,9 @@ export default function Home() {
 
     const initialValue = [{ answerText: '', isCorrect: false }];
     const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id 
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username 
+    
 
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
@@ -53,6 +54,7 @@ export default function Home() {
 
     const getQuestion = async () => {
         const date = new Date().toISOString().replace(/\T.+/, '')
+        //const date = '2024-08-30'
         try {
             const res = await axios.request({
                 method: 'get',
@@ -160,6 +162,28 @@ export default function Home() {
         if (type == 'Referral') return 'bg-pink-500'
         if (type == 'Trivia') return 'bg-violet-500'
     }
+    const getButtonColor = (option) => {
+        console.log('selected option:', selectedOption)
+        if (todayQuestion.responseStatus.responses.length) {
+            if (todayQuestion.responseStatus.responses[0].selectedOption == option.answerText) {
+                return option.isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }
+            else if(option.isCorrect){
+                return 'bg-green-500 text-white'
+            }
+        } else {
+            if (selectedOption) {
+                if (selectedOption == option.answerText) {
+                    return option.isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                }
+                else if(option.isCorrect){
+                    return 'bg-green-500 text-white'
+                }
+            }
+
+        }
+        return 'bg-blue-500 text-white';
+    }
 
     return (
         <div className="flex flex-col items-center justify-around h-full w-full bg-black text-white p-4">
@@ -193,21 +217,29 @@ export default function Home() {
 
             <div className="flex flex-col bg-gray-900 p-6 rounded-lg mb-8 min-w-full">
                 <div>
-                    <div className='flex justify-between space-x-28 mb-5'>
+                    <div className='flex justify-between mb-5'>
                         <p className='flex text-orange-300'>{todayQuestion.question ? `Difficulty: ${todayQuestion.difficulty}` : 'No trivia today'}</p>
                         <p className='flex text-green-300'>{todayQuestion.question ? `+${todayQuestion.score} TOAD` : ''}</p>
                     </div>
                 </div>
                 {todayQuestion.question ? (
                     <div className="items-center text-center">
-                        <p className="mb-3 justify-center p-1">{todayQuestion.question}</p>
+                        <p className="mb-3 justify-center p-1 font-bold">{todayQuestion.question}</p>
                         <div className="flex flex-col items-center space-y-2">
                             {answerOptions.map((option) => (
+                                // <button
+                                //     disabled={attempted || todayQuestion.responseStatus.responses.length != 0}
+                                //     key={option}
+                                //     onClick={() => handleTrivia(option)}
+                                //     className={`py-2 px-4 rounded-lg ${selectedOption === option ? (isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-blue-500 text-white'}`}
+                                // >
+                                //     {option.answerText}
+                                // </button>
                                 <button
                                     disabled={attempted || todayQuestion.responseStatus.responses.length != 0}
                                     key={option}
                                     onClick={() => handleTrivia(option)}
-                                    className={`py-2 px-4 rounded-lg ${selectedOption === option ? (isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-blue-500 text-white'}`}
+                                    className={`py-2 px-4 rounded-lg ${getButtonColor(option)} font-semibold`}
                                 >
                                     {option.answerText}
                                 </button>
