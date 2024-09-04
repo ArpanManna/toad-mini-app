@@ -114,7 +114,7 @@ export default function Home() {
                     },
                     data: JSON.stringify({
                         userId: userId.toString(),
-                        userName: userName.toString(),
+                        userName: userName? userName.toString(): '',
                     })
                 });
             }
