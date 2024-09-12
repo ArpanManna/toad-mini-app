@@ -118,7 +118,13 @@ export default function PatternMatch() {
         const target = e.currentTarget as HTMLDivElement;
         const index = Number(target.id) - 1
         const bulbNodes = (bulbRef.current as HTMLElement).childNodes;
-        if (gameData.isLoading) {
+        if(gameData.isWon){
+            toast(<div className=' font-mono font-[600] text-[14px] text-green-500'>Try new challenge?</div>, {
+                duration: 3000,
+                position: 'top-center'
+            })
+        }
+        else if (gameData.isLoading) {
             toast(<div className=' font-mono font-[600] text-[14px] text-green-500'>Please wait till the sequence is generated.</div>, {
                 duration: 2000,
                 position: 'top-center'
