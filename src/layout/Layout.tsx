@@ -7,7 +7,7 @@ export default function Layout() {
     return (
         <>
             <Toaster />
-            <div className='flex justify-between h-full flex-col'>
+            <div className='flex justify-between h-full flex-col gap-[10px]'>
                 <Outlet />
                 <Navbar />
             </div>
