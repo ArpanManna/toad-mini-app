@@ -7,15 +7,16 @@ import WebApp from '@twa-dev/sdk'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { config } from '../../config';
+import GameList from './GameList';
 
 export default function Home() {
     const navigate = useNavigate()
 
     const initialValue = [{ answerText: '', isCorrect: false }];
     const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id 
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username 
-    
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'Beelionair'
+
 
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
@@ -114,7 +115,7 @@ export default function Home() {
                     },
                     data: JSON.stringify({
                         userId: userId.toString(),
-                        userName: userName? userName.toString(): '',
+                        userName: userName ? userName.toString() : '',
                     })
                 });
             }
@@ -168,7 +169,7 @@ export default function Home() {
             if (todayQuestion.responseStatus.responses[0].selectedOption == option.answerText) {
                 return option.isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
             }
-            else if(option.isCorrect){
+            else if (option.isCorrect) {
                 return 'bg-green-500 text-white'
             }
         } else {
@@ -176,7 +177,7 @@ export default function Home() {
                 if (selectedOption == option.answerText) {
                     return option.isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
                 }
-                else if(option.isCorrect){
+                else if (option.isCorrect) {
                     return 'bg-green-500 text-white'
                 }
             }
@@ -186,7 +187,7 @@ export default function Home() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-around h-full w-full bg-black text-white p-4">
+        <div className="flex flex-col items-center justify-around w-full bg-black text-white p-4">
             <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
                 <img src={logo} alt="Toad" className='object-scale-down w-full h-full' />
             </div>
@@ -194,8 +195,9 @@ export default function Home() {
                 <h1 className="text-3xl text-green-300">{todayQuestion.balance ? (todayQuestion.balance).toLocaleString() : 0}</h1>
                 <p className="text-xl">TOAD</p>
             </div>
+            <GameList />
 
-            <div className="flex flex-col bg-gray-800 p-4 rounded-lg mb-4 min-w-full">
+            {/* <div className="flex flex-col bg-gray-800 p-4 rounded-lg mb-4 min-w-full">
                 <div className="text-left">
                     <h2 className="text-xl mb-1">TOAD COMMUNITY</h2>
                     <p className="text-sm mb-2">Home for Telegram OGs</p>
@@ -209,12 +211,11 @@ export default function Home() {
                     </div>
 
                 </div>
-            </div>
+            </div> */}
             <div className="flex min-w-full mb-4">
                 <h2 className="text">🗓️ Today's trivia</h2>
 
             </div>
-
             <div className="flex flex-col bg-gray-900 p-6 rounded-lg mb-8 min-w-full">
                 <div>
                     <div className='flex justify-between mb-5'>
@@ -276,7 +277,6 @@ export default function Home() {
             </div>
             <div className="flex min-w-full mb-4">
                 <h2 className="text">💰 Earnings</h2>
-
             </div>
             <div className="w-full mb-8">
                 {earnings.map((item, index) => (
@@ -294,22 +294,6 @@ export default function Home() {
                         <p>+{item.score ? item.score.toLocaleString() : 0} TOAD</p>
                     </div>
                 ))}
-            </div>
-
-            <div className="fixed bottom-0 w-full bg-blue-700 flex justify-around items-center text-xs mt-4">
-                <div onClick={navigateHome} className="text-center text-white w-1/5">
-                    <Coins className="w-8 h-8 mx-auto" />
-                    <p className="mt-1">Earn</p>
-                </div>
-                <div onClick={navigateLeaderBoard} className="text-center text-white w-1/5 m-1 p-2 rounded-2xl">
-                    <img src={leaderBoard} alt="Exchange" className="w-8 h-8 mx-auto" />
-                    {/* <p className="w-8 h-8 mx-auto">🏆</p> */}
-                    <p className="mt-1">Leaderboard</p>
-                </div>
-                <div onClick={navigateFriends} className="text-center text-white w-1/5">
-                    <Friend className="w-8 h-8 mx-auto" />
-                    <p className="mt-1">Friends</p>
-                </div>
             </div>
         </div >
     )

@@ -28,9 +28,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #000000;
   height: 100vh;
+  /* color: #fcfcfd; */
 }
 #root{
-  height: fit-content;
+  height: 100vh;
 }
 code {
   font-family: "Scandia" , source-code-pro, Menlo, Monaco, Consolas, "Courier New",

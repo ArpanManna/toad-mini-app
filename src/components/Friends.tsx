@@ -7,13 +7,12 @@ import WebApp from '@twa-dev/sdk'
 import { config } from '../../config.js';
 import axios from 'axios';
 
-export function Friends() {
-
+function Friends() {
     const navigate = useNavigate()
     const initialValue = [
         { userName: 'No Friends till now', score: 0 }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'Beelionair'
     const [friends, setFriends] = useState(initialValue)
     const [totalFriends, setTotalFriends] = useState(0)
 
@@ -67,7 +66,7 @@ export function Friends() {
     }
 
     return (
-        <div className="flex flex-col items-center bg-black text-white min-h-screen p-4">
+        <div className="flex flex-col items-center bg-black text-white p-4">
             <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
                 <img src={logo} alt="Toad" className='object-scale-down w-full h-full' />
             </div>
@@ -97,23 +96,6 @@ export function Friends() {
                         <p>+{friend.score} TOAD</p>
                     </div>
                 ))}
-            </div>
-
-
-            <div className="fixed bottom-0 w-full bg-blue-700 flex justify-around items-center text-xs">
-                <div onClick={navigateHome} className="text-center text-white w-1/5">
-                    <Coins className="w-8 h-8 mx-auto" />
-                    <p className="mt-1">Earn</p>
-                </div>
-                <div onClick={navigateLeaderBoard} className="text-center text-white w-1/5 m-1 p-2 rounded-2xl">
-                    <img src={leaderBoard} alt="Exchange" className="w-8 h-8 mx-auto" />
-                    {/* <p className="w-8 h-8 mx-auto">🏆</p> */}
-                    <p className="mt-1">Leaderboard</p>
-                </div>
-                <div onClick={navigateFriends} className="text-center text-white w-1/5">
-                    <Friend className="w-8 h-8 mx-auto" />
-                    <p className="mt-1">Friends</p>
-                </div>
             </div>
         </div>
     );

@@ -1,0 +1,22 @@
+.box {
+  border-radius: 12px;
+  height: 60px;
+  background: linear-gradient(45deg, #e3e3e4, #ffffff);
+  box-shadow: 7px 20px 60px #d6d6d7, 1px 0px 6px #ffffff;
+}
+
+.box-selected {
+  border-radius: 12px;
+  height: 60px;
+  background: radial-gradient(circle at bottom center, #ffc837 15px, #ff8008);
+  color: white;
+}
+.num-bg {
+  background: white;
+  display: grid;
+  place-items: center center;
+  /* background: radial-gradient(circle at bottom center, #FFC837 15px, #FF8008); */
+  /* background: radial-gradient(circle at bottom center, #0cff1e 15px, #0824ff); */
+  background-color: black;
+  box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
