@@ -125,11 +125,18 @@ export default function DiceDuel() {
         diceRef.current = [...dices]
     }, [])
     const infoHandleClick = useCallback(() => {
-        toast(<ul className=' font-mono text-[14px] list-disc'>
-            <li>Select your lucky number.</li>
-            <li>Test your luck by clicking on roll dice.</li>
-            <li>If you win, +150 TOAD will be credited.</li>
-        </ul>)
+        toast(
+            <div>
+                <span className=' font-[700] font-mono text-[16px]'>
+                    How to Play?
+                </span>
+                <ul className=' font-mono text-[14px] list-disc font-[600] pl-[12px]'>
+                    <li>Select your lucky number.</li>
+                    <li>Test your luck by clicking on roll dice.</li>
+                    <li>If you win, +150 TOAD will be credited.</li>
+                </ul>
+            </div>
+        )
     }, [])
     return (
         <>

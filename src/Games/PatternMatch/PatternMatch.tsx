@@ -27,7 +27,7 @@ export default function PatternMatch() {
                 <ul className=' font-mono text-[14px] list-disc font-[600] pl-[12px]'>
                     <li>Click on start challenge.</li>
                     <li>After viewing the sequence, tap on the bulb to match exact same seqeunce.</li>
-                    <li>You can click on start challenge again if you want to start again with the challenge.</li>
+                    <li>You can try new challenge, if you missed to see the sequence.</li>
                     <li>If you exactly match the pattern, +150 TOAD will be credited.</li>
                 </ul>
             </div>
