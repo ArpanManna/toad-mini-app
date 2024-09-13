@@ -1,5 +1,5 @@
 import React from 'react';
-import { leaderBoard, logo } from '../images';
+import { leaderBoard, logo, toadLogo } from '../images';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
 import { useNavigate } from 'react-router-dom'
@@ -188,8 +188,8 @@ export default function Home() {
 
     return (
         <div className="flex flex-col items-center justify-around w-full bg-black text-white p-4">
-            <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
-                <img src={logo} alt="Toad" className='object-scale-down w-full h-full' />
+            <div className='w-[128px] h-[128px] rounded-full bg-white justify-center'>
+                <img src={toadLogo} alt="Toad" className=' object-cover w-full h-full rounded-[148px]' />
             </div>
             <div className="text-center mt-4 mb-4">
                 <h1 className="text-3xl text-green-300">{todayQuestion.balance ? (todayQuestion.balance).toLocaleString() : 0}</h1>
@@ -216,7 +216,7 @@ export default function Home() {
                 <h2 className="text">🗓️ Today's trivia</h2>
 
             </div>
-            <div className="flex flex-col bg-gray-900 p-6 rounded-lg mb-8 min-w-full">
+            <div className="flex flex-col bg-gray-900 p-6 rounded-lg mb-8 min-w-full card">
                 <div>
                     <div className='flex justify-between mb-5'>
                         <p className='flex text-orange-300'>{todayQuestion.question ? `Difficulty: ${todayQuestion.difficulty}` : 'No trivia today'}</p>
@@ -280,9 +280,9 @@ export default function Home() {
             </div>
             <div className="w-full mb-8">
                 {earnings.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between mb-4">
+                    <div key={index} className="flex items-center justify-between mb-4 card">
                         <div className="flex items-center">
-                            <div className={`${getColor(item.type)} text-white w-10 h-10 rounded-full flex items-center justify-center`}>
+                            <div className={`${getColor(item.type)} text-white w-10 h-10 rounded-full flex items-center justify-center logo-initial`}>
                                 {getInitials(item.type)}
                             </div>
                             <div>

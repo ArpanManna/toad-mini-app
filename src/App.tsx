@@ -20,7 +20,7 @@ function App() {
           <Route path=':id' element={<Game />}/>
           <Route path="friends" element={<Friends />} />
           <Route path="leaderboard" element={<Leaderboard />} />
-          <Route path='/challenges' element={<Challenges/>} />
+          <Route path='/tasks' element={<Challenges/>} />
         </Route>
       </Routes>
 

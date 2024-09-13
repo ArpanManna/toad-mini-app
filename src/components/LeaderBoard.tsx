@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
-import { leaderBoard } from '../images';
+import { leaderBoard, toadLogo } from '../images';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { logo } from '../images';
@@ -96,13 +96,12 @@ export function Leaderboard() {
     }
     return (
         <div className="flex flex-col items-center bg-black text-white p-4 min-w-full">
-            <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
-                <img src={logo} alt="Toad" className='object-scale-down w-full h-full'/>
+            <div className='w-[128px] h-[128px] rounded-full bg-white justify-center'>
+                <img src={toadLogo} alt="Toad" className=' object-cover w-full h-full rounded-[148px]' />
             </div>
-
             <div className="text-center mt-4 mb-4 w-full text-green-300">
                 <h2 className="text-2xl font-bold">Wall of Fame</h2>
-                <div className="flex items-center justify-between bg-gray-800 p-4 rounded-lg mt-4">
+                <div className="flex items-center justify-between bg-gray-800 p-4 rounded-lg mt-4 card">
                     <div className="flex items-center">
                         <div className="bg-blue-700 text-white w-10 h-10 rounded-full flex items-center justify-center">
                             {getInitials(userName)}
@@ -117,7 +116,7 @@ export function Leaderboard() {
             <div className="w-full mb-8">
                 <h3 className="text-xl mb-4 font-bold">{holders? `${holders.toLocaleString()} holders`: ''}</h3>
                 {leaders.map((holder, index) => (
-                    <div key={index} className="flex items-center justify-between mb-4">
+                    <div key={index} className="flex items-center justify-between mb-4 card">
                         <div className="flex items-center">
                             <div className={`bg-violet-700 text-white w-10 h-10 rounded-full flex items-center justify-center`}>
                                 {getInitials(holder.userName)}

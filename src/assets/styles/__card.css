@@ -1,0 +1,16 @@
+.card {
+  border-radius: var(--Spacing-3, 12px);
+  border: 1px solid var(--Color-Border-Border-3, #3a3a59);
+  background: var(
+    --Surface-Dark-1,
+    radial-gradient(
+      112.03% 88.81% at 50% 0%,
+      rgba(48, 48, 64, 0.7) 0%,
+      rgba(24, 24, 27, 0.7) 100%
+    )
+  );
+  padding: 12px;
+}
+.logo-initial{
+  background-color: #2D2D3B;
+}

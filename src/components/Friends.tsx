@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Friend from '../icons/Friend';
 import Coins from '../icons/Coins';
-import { leaderBoard, logo } from '../images';
+import { logo, toadLogo } from '../images';
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 import { config } from '../../config.js';
@@ -67,8 +67,8 @@ function Friends() {
 
     return (
         <div className="flex flex-col items-center bg-black text-white p-4">
-            <div className='w-24 h-24 rounded-full bg-white justify-center p-2'>
-                <img src={logo} alt="Toad" className='object-scale-down w-full h-full' />
+            <div className='w-[128px] h-[128px] rounded-full bg-white justify-center'>
+                <img src={toadLogo} alt="Toad" className=' object-cover w-full h-full rounded-[148px]' />
             </div>
             <div className="text-center mb-4 mt-4">
                 <h2 className="text-2xl font-bold">Invite friends</h2>
