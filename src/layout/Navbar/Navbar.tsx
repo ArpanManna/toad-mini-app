@@ -20,8 +20,8 @@ const routes = [
         svg: 'earn'
     },
     {
-        label: 'Challenges',
-        path: '/challenges',
+        label: 'Tasks',
+        path: '/tasks',
         svg: 'challenges'
     },
     {

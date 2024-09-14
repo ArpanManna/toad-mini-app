@@ -13,7 +13,7 @@ const GameList = () => {
             <div className="flex min-w-full mb-4">
                 <h2 className="text">Games</h2>
             </div>
-            <div className="flex justify-start gap-10 bg-gray-900 p-2 rounded-lg mb-2 min-w-full">
+            <div className="flex card justify-start gap-10 bg-gray-900 p-2 rounded-lg mb-2 min-w-full">
                 {games?.map(({ name, route, icon }) =>
                     <Link to={`/${route}`} className='flex items-center flex-col gap-4 justify-center align-middle cursor-pointer' key={name} >
                         <div>

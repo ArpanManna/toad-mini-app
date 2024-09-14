@@ -6,6 +6,7 @@ import Icons from '../../icons/icons'
 import { GameLoss } from '../../assets/svg'
 import Confetti from 'react-confetti'
 import { udpateGame } from '../../api'
+import { config } from '../../../config'
 
 export default function PatternMatch() {
     const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
@@ -28,7 +29,7 @@ export default function PatternMatch() {
                     <li>Click on start challenge.</li>
                     <li>After viewing the sequence, tap on the bulb to match exact same seqeunce.</li>
                     <li>You can try new challenge, if you missed to see the sequence.</li>
-                    <li>If you exactly match the pattern, +150 TOAD will be credited.</li>
+                    <li>If you exactly match the pattern, Depending the Game level TOADs will be credited.</li>
                 </ul>
             </div>
             , {
@@ -45,13 +46,49 @@ export default function PatternMatch() {
             }
         }
         if (randomNumBulb < 6) {
-            toast(<div className=' font-bold font-mono'> Level: easy</div>)
+            toast(<div className=' font-bold font-mono flex flex-col'>
+                <span>
+                    Level: Easy
+                </span>
+                <span>
+                    Choose: {randomNumBulb} Bulb
+                </span>
+                <span>
+                    Score: {config['patternMatchEasy']}
+                </span>
+            </div>, {
+                position: 'bottom-center'
+            })
         }
         else if (randomNumBulb > 6) {
-            toast(<div className=' font-bold font-mono'> Level: Hard</div>)
+            toast(<div className=' font-bold font-mono flex flex-col'>
+                <span>
+                    Level: Hard
+                </span>
+                <span>
+                    Choose: {randomNumBulb} Bulb
+                </span>
+                <span>
+                    Score: {config['patternMatchHard']}
+                </span>
+            </div>, {
+                position: 'bottom-center'
+            })
         }
         else {
-            toast(<div className=' font-bold font-mono'> Level: Medium</div>)
+            toast(<div className=' font-bold font-mono flex flex-col'>
+                <span>
+                    Level: Medium
+                </span>
+                <span>
+                    Choose: {randomNumBulb} Bulb
+                </span>
+                <span>
+                    Score: {config['patternMatchMedium']}
+                </span>
+            </div>, {
+                position: 'bottom-center'
+            })
         }
 
         return { randomSequence: resultantRandomSequence, randomNumBulb: randomNumBulb };
@@ -118,7 +155,7 @@ export default function PatternMatch() {
         const target = e.currentTarget as HTMLDivElement;
         const index = Number(target.id) - 1
         const bulbNodes = (bulbRef.current as HTMLElement).childNodes;
-        if(gameData.isWon){
+        if (gameData.isWon) {
             toast(<div className=' font-mono font-[600] text-[14px] text-green-500'>Try new challenge?</div>, {
                 duration: 3000,
                 position: 'top-center'
@@ -141,11 +178,11 @@ export default function PatternMatch() {
                     "userId": userId,
                     "userName": userName,
                     "meta": "Games",
-                    "score": 150
+                    "score": config[gameData.lightNumberOfBulbs > 6 ? 'patternMatchHard': gameData.lightNumberOfBulbs < 6 ? 'patternMatchEasy' : 'patternMatchMedium']
                 });
                 udpateGame(data)
 
-                toast.success('You Won! +150 TOAD has been credited to your ID', {
+                toast.success(`You Won! ${config[gameData.lightNumberOfBulbs > 6 ? 'patternMatchHard': gameData.lightNumberOfBulbs < 6 ? 'patternMatchEasy' : 'patternMatchMedium']} TOAD has been credited to your ID`, {
                     duration: 3000
                 });
                 setGameData(prevData => ({
