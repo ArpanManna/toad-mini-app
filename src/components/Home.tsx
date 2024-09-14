@@ -175,7 +175,7 @@ export default function Home() {
                 {todayQuestion.question ? (
                     <div className="items-center text-center">
                         <p className="mb-3 justify-center p-1 font-bold">{todayQuestion.question}</p>
-                        <div className="flex flex-col items-center space-y-2">
+                        <div className="flex flex-col space-y-2">
                             {answerOptions.map((option) => (
                                 // <button
                                 //     disabled={attempted || todayQuestion.responseStatus.responses.length != 0}
