@@ -9,22 +9,18 @@ import axios from 'axios';
 import { config } from '../../config';
 import GameList from './GameList';
 
-export default function Home() {
-    const navigate = useNavigate()
+const initialValue = [{ answerText: '', isCorrect: false }];
+const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
 
-    const initialValue = [{ answerText: '', isCorrect: false }];
-    const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
+export default function Home() {
     const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
     const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'Beelionair'
-
-
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
     const [todayQuestion, setTodayQuestion] = useState('')
     const [answerOptions, setAnswerOptions] = useState(initialValue)
     const [earnings, setEarnings] = useState(initialEarning)
     const [attempted, setAttempted] = useState(false)
-    const [member, setMember] = useState(false)
 
     useEffect(() => {
         getQuestion()
@@ -69,7 +65,6 @@ export default function Home() {
             if (res && res.data && res.data.success == true) {
                 setTodayQuestion(res.data)
                 setAnswerOptions(res.data.answerOptions)
-                setMember(res.data.member)
             } else {
                 WebApp.showAlert("Failed to fetch Today's pick")
             }
@@ -78,52 +73,6 @@ export default function Home() {
         }
 
     }
-
-    function navigateFriends() {
-        navigate('/friends')
-    }
-    function navigateHome() {
-        navigate('/')
-    }
-    function navigateLeaderBoard() {
-        navigate('/leaderboard')
-    }
-    async function joinChannel() {
-        window.Telegram.WebApp.openTelegramLink(config.community_channel_link)
-    }
-
-    async function checkMemberStatus() {
-        if (member) return
-        try {
-            const res = await axios.request({
-                method: 'get',
-                maxBodyLength: Infinity,
-                url: `${config.telegramApiUrl}/bot${import.meta.env.VITE_BOT_TOKEN}/getChatMember?chat_id=${config.channelId}&user_id=${userId}`,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            console.log(res)
-            if (res && res.data.ok && res.data.result.status == "member") {
-                setMember(true)
-                const res = await axios.request({
-                    method: 'post',
-                    maxBodyLength: Infinity,
-                    url: `${import.meta.env.VITE_API_URL}/membership`,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: JSON.stringify({
-                        userId: userId.toString(),
-                        userName: userName ? userName.toString() : '',
-                    })
-                });
-            }
-        } catch (err) {
-            // WebApp.showAlert('Join Toad Community Channel')
-        }
-    }
-
     const handleTrivia = async (option) => {
         setSelectedOption(option.answerText)
         if (option.isCorrect) {
@@ -226,7 +175,7 @@ export default function Home() {
                 {todayQuestion.question ? (
                     <div className="items-center text-center">
                         <p className="mb-3 justify-center p-1 font-bold">{todayQuestion.question}</p>
-                        <div className="flex flex-col items-center space-y-2">
+                        <div className="flex flex-col space-y-2">
                             {answerOptions.map((option) => (
                                 // <button
                                 //     disabled={attempted || todayQuestion.responseStatus.responses.length != 0}
@@ -278,7 +227,7 @@ export default function Home() {
             <div className="flex min-w-full mb-4">
                 <h2 className="text">💰 Earnings</h2>
             </div>
-            <div className="w-full mb-8">
+            <div className="w-full max-h-[320px] overflow-auto">
                 {earnings.map((item, index) => (
                     <div key={index} className="flex items-center justify-between mb-4 card">
                         <div className="flex items-center">

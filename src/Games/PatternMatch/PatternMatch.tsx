@@ -235,7 +235,7 @@ export default function PatternMatch() {
                 <Header handleClick={infoHandleClick} title={'Pattern Match'} svgKey={'matchPattern'} />
                 <Pattern ref={bulbRef} handleBulbClick={handleBulbClick} />
                 <button type='button' onClick={handleShowSequence} className={`${gameData.isLoading && 'box-selected'} self-center px-4 py-2 rounded-lg flex gap-4 items-center justify-center bg-[#fcfcfd] font-mono font-[600] text-[20px] w-fit !h-[unset]`}>
-                    <div className=' [&>div]:h-[24px] [&>div]:w-[24px] mx-auto'>{Icons['matchPattern']}</div>
+                    {/* <div className=' [&>div]:h-[24px] [&>div]:w-[24px] mx-auto'>{Icons['matchPattern']}</div> */}
                     <div>{
                         gameData.randomSequence.length ? gameData.isLoading ? 'Loading...' : 'Try new challenge' : 'Start challenge'
                     }</div>
