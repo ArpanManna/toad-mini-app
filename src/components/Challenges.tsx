@@ -24,9 +24,8 @@ type TaskDetailType = {
   taskClicked: boolean,
   taskCompleted: boolean
 }
-const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
-const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'Beelionair'
-
+const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
+const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
 export default function Challenges() {
   const [tasks, setTasks] = useState({
     isLoading: false,
@@ -98,7 +97,7 @@ export default function Challenges() {
         const apiConfig = {
           method: 'get',
           maxBodyLength: Infinity,
-          url: `${config.telegramApiUrl}/bot${import.meta.env.VITE_BOT_TOKEN}/getChatMember?chat_id=${config.channelId}&user_id=${userId}`,
+          url: `${config.telegramApiUrl}/bot${import.meta.env.VITE_BOT_TOKEN}/getChatMember?chat_id=${item.meta.handle}&user_id=${userId}`,
           headers: {
             'Content-Type': 'application/json'
           },

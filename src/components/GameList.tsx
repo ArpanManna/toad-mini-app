@@ -1,5 +1,4 @@
 import React from 'react'
-import { logo } from '../images'
 import { Link } from 'react-router-dom'
 import Icons from '../icons/icons'
 import { IoGameController } from "react-icons/io5";

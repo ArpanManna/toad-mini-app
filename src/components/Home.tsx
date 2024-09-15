@@ -1,20 +1,16 @@
 import React from 'react';
-import { leaderBoard, logo, toadLogo } from '../images';
-import Friend from '../icons/Friend';
-import Coins from '../icons/Coins';
-import { useNavigate } from 'react-router-dom'
+import { toadLogo } from '../images';
 import WebApp from '@twa-dev/sdk'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { config } from '../../config';
 import GameList from './GameList';
 
 const initialValue = [{ answerText: '', isCorrect: false }];
 const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
 
 export default function Home() {
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'Beelionair'
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
     const [todayQuestion, setTodayQuestion] = useState('')

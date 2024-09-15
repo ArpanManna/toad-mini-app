@@ -9,6 +9,7 @@ import Header from '../Header';
 import Icons from '../../icons/icons';
 import axios from 'axios';
 import { udpateGame } from '../../api';
+import { config } from '../../../config';
 
 export default function DiceDuel() {
     const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
@@ -80,14 +81,14 @@ export default function DiceDuel() {
             await sleep(1000)
             setNum(prevValue => ({ ...prevValue, randomNum: resp[0] + resp[1], isWon: prevValue.selectedNum === resp[0] + resp[1], isLoading: false }))
             if (num.selectedNum === resp[0] + resp[1]) {
-                toast.success('You Won! +150 TOAD has been credited to your ID', {
+                toast.success(`You Won! +${config.diceDual} TOAD has been credited to your ID`, {
                     duration: 3000
                 });
                 const data = JSON.stringify({
                     "userId": userId,
                     "userName": userName,
                     "meta": "Games",
-                    "score": 150
+                    "score": config.diceDual
                 });
 
                 udpateGame(data)
@@ -133,7 +134,7 @@ export default function DiceDuel() {
                 <ul className=' font-mono text-[14px] list-disc font-[600] pl-[12px]'>
                     <li>Select your lucky number.</li>
                     <li>Test your luck by clicking on roll dice.</li>
-                    <li>If you win, +150 TOAD will be credited.</li>
+                    <li>If you win, {config.diceDual} TOAD will be credited.</li>
                 </ul>
             </div>
         )

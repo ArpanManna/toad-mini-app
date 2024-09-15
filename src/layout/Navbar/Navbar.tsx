@@ -15,7 +15,7 @@ const navigationIcons = {
 
 const routes = [
     {
-        label: 'Earn',
+        label: 'Home',
         path: '/',
         svg: 'earn'
     },

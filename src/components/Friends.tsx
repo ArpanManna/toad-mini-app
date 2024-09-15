@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Friend from '../icons/Friend';
-import Coins from '../icons/Coins';
-import { logo, toadLogo } from '../images';
+import { toadLogo } from '../images';
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 import { config } from '../../config.js';
@@ -11,8 +9,8 @@ function Friends() {
     const navigate = useNavigate()
     const initialValue = [
         { userName: 'No Friends till now', score: 0 }];
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1745606996'
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : 'Beelionair'
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
     const [friends, setFriends] = useState(initialValue)
     const [totalFriends, setTotalFriends] = useState(0)
 

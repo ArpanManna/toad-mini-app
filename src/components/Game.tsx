@@ -1,6 +1,5 @@
 import React, { lazy } from 'react'
 import { useLocation } from 'react-router-dom'
-import Coins from '../icons/Coins'
 
 const DiceDuel = lazy(() => import('../Games/DiceDuel/DiceDuel'))
 const PatternMatch = lazy(() => import('../Games/PatternMatch'))

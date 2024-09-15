@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css'
 import Home from './components/Home';
 import Friends from './components/Friends';
@@ -7,6 +7,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Layout from './layout';
 import Challenges from './components/Challenges';
 import Game from './components/Game';
+import WebApp from '@twa-dev/sdk';
 
 
 function App() {
