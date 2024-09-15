@@ -11,6 +11,22 @@ import WebApp from '@twa-dev/sdk';
 
 
 function App() {
+  useEffect(() => {
+    if (location.pathname === '/') {
+      WebApp.BackButton.isVisible = false
+      WebApp.BackButton.hide()
+    }
+    else {
+      WebApp.BackButton.isVisible = true
+      WebApp.BackButton.show()
+    }
+  }, [location.pathname])
+  useEffect(() => {
+    window?.Telegram?.WebApp?.onEvent('backButtonClicked', () => {
+      history.back()
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <Router>
       <Routes>
