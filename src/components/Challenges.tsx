@@ -177,7 +177,7 @@ export default function Challenges() {
       return (<div className=' flex flex-1 w-full justify-between items-center card' key={item._id}>
         <div className=' flex flex-col gap-[2px]'>
           <div className=' text-[18px]'>{item.title}</div>
-          <div className=' text-[14px] text-green-300'>+{item.score} TOAD</div>
+          <div className=' text-[14px] text-green-300'>+ {item.score} TOAD</div>
         </div>
         <button type='button' onClick={(e) => handleClick(e, item)} className='bg-[#fcfcfd] px-4 py-2 rounded-2xl text-[#000] font-[500]'>
           {
