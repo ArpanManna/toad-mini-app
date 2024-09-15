@@ -108,7 +108,7 @@ export default function Challenges() {
         }
         const response = await fetchData(apiConfig)
         console.log(response);
-        if (response && response.data.ok && response.data.result.status == "member") {
+        if (response && response.ok && response.result.status == "member") {
           const data = JSON.stringify({
             "userId": userId,
             "userName": userName,
