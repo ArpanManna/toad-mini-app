@@ -4,6 +4,8 @@ import WebApp from '@twa-dev/sdk'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import GameList from './GameList';
+import toast from 'react-hot-toast';
+import { GameLoss } from '../assets/svg';
 
 const initialValue = [{ answerText: '', isCorrect: false }];
 const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
@@ -73,9 +75,17 @@ export default function Home() {
         setSelectedOption(option.answerText)
         if (option.isCorrect) {
             setIsCorrect(true)
+            toast.success(`You are coorect! +${todayQuestion.score} TOAD has been credited to your ID`, {
+                duration: 3000
+            });
         }
         else {
             setIsCorrect(false)
+            toast(<div className=' font-mono font-[600] text-[14px] text-rose-500'>You Lose! Better Luck Tomorrow</div>, {
+                icon: <GameLoss />,
+                duration: 2000,
+                position: 'top-center'
+            })
         }
 
         const res = await axios.request({
@@ -93,6 +103,7 @@ export default function Home() {
                 isCorrect: option.isCorrect
             })
         });
+
         setAttempted(true)
     }
 
