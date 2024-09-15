@@ -97,7 +97,7 @@ export default function Challenges() {
         const apiConfig = {
           method: 'get',
           maxBodyLength: Infinity,
-          url: `${config.telegramApiUrl}/bot${import.meta.env.VITE_BOT_TOKEN}/getChatMember?chat_id=${item.meta.handle}&user_id=${userId}`,
+          url: `${config.telegramApiUrl}/bot${import.meta.env.VITE_BOT_TOKEN}/getChatMember?chat_id=@${item.meta.handle}&user_id=${userId}`,
           headers: {
             'Content-Type': 'application/json'
           },
