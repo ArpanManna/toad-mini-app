@@ -81,7 +81,7 @@ export default function DiceDuel() {
             await sleep(1000)
             setNum(prevValue => ({ ...prevValue, randomNum: resp[0] + resp[1], isWon: prevValue.selectedNum === resp[0] + resp[1], isLoading: false }))
             if (num.selectedNum === resp[0] + resp[1]) {
-                toast.success(`You Won! +${config.diceDual} TOAD has been credited to your ID`, {
+                toast.success(`You Won! +${config.diceDual} TOAD has been credited to your account`, {
                     duration: 3000
                 });
                 const data = JSON.stringify({

@@ -11,8 +11,8 @@ const initialValue = [{ answerText: '', isCorrect: false }];
 const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
 
 export default function Home() {
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : '1510838499'
     const [selectedOption, setSelectedOption] = useState(null)
     const [isCorrect, setIsCorrect] = useState(null);
     const [todayQuestion, setTodayQuestion] = useState('')
@@ -75,15 +75,15 @@ export default function Home() {
         setSelectedOption(option.answerText)
         if (option.isCorrect) {
             setIsCorrect(true)
-            toast.success(`You are coorect! +${todayQuestion.score} TOAD has been credited to your ID`, {
-                duration: 3000
-            });
+            toast.success(`🎉 You are correct ! +${todayQuestion.score} TOAD has been credited to your account`, {
+                duration: 4000
+            })
         }
         else {
             setIsCorrect(false)
-            toast(<div className=' font-mono font-[600] text-[14px] text-rose-500'>You Lose! Better Luck Tomorrow</div>, {
+            toast(<div className=' font-mono font-[600] text-[14px] text-rose-500'>Not correct! Better Luck Tomorrow</div>, {
                 icon: <GameLoss />,
-                duration: 2000,
+                duration: 3000,
                 position: 'top-center'
             })
         }
@@ -209,7 +209,8 @@ export default function Home() {
                         ) : (
                             (attempted && selectedOption) ? (
                                 <p className={`mt-4 font-bold ${selectedOption === todayQuestion.correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
-                                    {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} TOAD` : '😢 Try tomorrow again'}
+                                    {/* {isCorrect ? `🎉 Bingo ! You earned ${todayQuestion.score} TOAD` : '😢 Try tomorrow again'} */}
+                                    {isCorrect ? `` : ''}
                                 </p>
 
                             ) : attempted ? (

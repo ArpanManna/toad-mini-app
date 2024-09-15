@@ -182,7 +182,7 @@ export default function PatternMatch() {
                 });
                 udpateGame(data)
 
-                toast.success(`You Won! ${config[gameData.lightNumberOfBulbs > 6 ? 'patternMatchHard': gameData.lightNumberOfBulbs < 6 ? 'patternMatchEasy' : 'patternMatchMedium']} TOAD has been credited to your ID`, {
+                toast.success(`You Won! ${config[gameData.lightNumberOfBulbs > 6 ? 'patternMatchHard': gameData.lightNumberOfBulbs < 6 ? 'patternMatchEasy' : 'patternMatchMedium']} TOAD has been credited to your account`, {
                     duration: 3000
                 });
                 setGameData(prevData => ({
