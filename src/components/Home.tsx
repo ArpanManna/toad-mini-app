@@ -17,7 +17,6 @@ export default function Home() {
     const [answerOptions, setAnswerOptions] = useState(initialValue)
     const [earnings, setEarnings] = useState(initialEarning)
     const [attempted, setAttempted] = useState(false)
-console.log(window.Telegram.WebApp?.initDataUnsafe?.user);
 
     useEffect(() => {
         getQuestion()
