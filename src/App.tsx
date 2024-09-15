@@ -10,7 +10,11 @@ import Game from './components/Game';
 import WebApp from '@twa-dev/sdk';
 
 
-function App() {
+function App() {  
+  useEffect(() => {    
+    WebApp.headerColor = '#000000'
+  }, [])
+  
   useEffect(() => {
     if (location.pathname === '/') {
       WebApp.BackButton.isVisible = false
@@ -21,12 +25,14 @@ function App() {
       WebApp.BackButton.show()
     }
   }, [location.pathname])
+
   useEffect(() => {
     window?.Telegram?.WebApp?.onEvent('backButtonClicked', () => {
       history.back()
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <Router>
       <Routes>
@@ -34,10 +40,10 @@ function App() {
           <Route index element={
             <Home />
           } />
-          <Route path=':id' element={<Game />}/>
+          <Route path=':id' element={<Game />} />
           <Route path="friends" element={<Friends />} />
           <Route path="leaderboard" element={<Leaderboard />} />
-          <Route path='/tasks' element={<Challenges/>} />
+          <Route path='/tasks' element={<Challenges />} />
         </Route>
       </Routes>
 
