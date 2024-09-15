@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchData, joinTelegramChannel, openLinkInExternalBrowser } from '../api'
+import { useTonAddress, useTonConnectModal, useTonWallet } from "@tonconnect/ui-react";
 import { config } from '../../config'
 import { MdDone } from "react-icons/md";
 import toast from 'react-hot-toast';
 import { toadLogo } from '../images';
 
+const API_URL = import.meta.env.VITE_API_URL
 type TaskResponseType = {
   score: number,
   taskId: string
@@ -17,6 +19,7 @@ type TaskDetailType = {
     "type": string,
     "handle": string,
     "url": string,
+    count?: number
   },
   "score": number,
   "responses": [],
@@ -24,7 +27,7 @@ type TaskDetailType = {
   taskClicked: boolean,
   taskCompleted: boolean
 }
-const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
+const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ?? 1745606996
 const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
 export default function Challenges() {
   const [tasks, setTasks] = useState({
@@ -32,6 +35,9 @@ export default function Challenges() {
     result: [],
     claimedData: []
   })
+  const { open } = useTonConnectModal();
+  const walletAddress = useTonAddress(false);
+  const [userTotalFriends, setFriendsTask] = useState(0)
   const [tasksUpdatedCounter, setTasksUpdatedCounter] = useState<number>(0)
   useEffect(() => {
     const config = {
@@ -107,7 +113,6 @@ export default function Challenges() {
           })
         }
         const response = await fetchData(apiConfig)
-        console.log(response);
         if (response && response.ok && response.result.status == "member") {
           const data = JSON.stringify({
             "userId": userId,
@@ -124,14 +129,39 @@ export default function Challenges() {
             data: data
           };
           const resp = await fetchData(config)
-          console.log(resp);
           if (resp.success) {
             setTasksUpdatedCounter(prev => prev + 1)
             toast.success('Rewards credited')
           }
         }
       }
-      else {
+      else if (item.meta.type === 'friends') {
+        if (userTotalFriends >= Number(item.meta.count)) {
+          const data = JSON.stringify({
+            "userId": userId,
+            "userName": userName,
+            "socialTaskId": item._id
+          });
+          const shareRewardsUpdateConfig = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${import.meta.env.VITE_API_URL}/tasks/update`,
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            data: data
+          };
+          const resp = await fetchData(shareRewardsUpdateConfig)
+          if (resp.success) {
+            setTasksUpdatedCounter(prev => prev + 1)
+            toast.success('Rewards credited')
+          }
+        }
+        else {
+          toast.error(`You only have ${userTotalFriends} friends`)
+        }
+      }
+      else if (item.meta.type === 'x') {
         const data = JSON.stringify({
           "userId": userId,
           "userName": userName,
@@ -147,10 +177,54 @@ export default function Challenges() {
           data: data
         };
         const resp = await fetchData(config)
-        console.log(resp);
         if (resp.success) {
           setTasksUpdatedCounter(prev => prev + 1)
           toast.success('Rewards credited')
+        }
+      }
+      else if (item.meta.type === 'wallet') {
+        if (walletAddress.length) {
+          toast.success('Wallet is connected.')
+          const walletData = JSON.stringify({
+            "userId": userId,
+            "userName": userName,
+            "walletAddress": walletAddress
+          });
+
+          const walletConfig = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${API_URL}/wallet`,
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            data: walletData
+          };
+          const walletApiResponse = await fetchData(walletConfig);
+          if (walletApiResponse.success) {
+            const shareRewardsWalletConfigData = JSON.stringify({
+              "userId": userId,
+              "userName": userName,
+              "socialTaskId": item._id
+            });
+            const shareRewardsWalletConfig = {
+              method: 'post',
+              maxBodyLength: Infinity,
+              url: `${import.meta.env.VITE_API_URL}/tasks/update`,
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              data: shareRewardsWalletConfigData
+            };
+            const walletRewardsShareResponse = await fetchData(shareRewardsWalletConfig)
+            if (walletRewardsShareResponse.success) {
+              setTasksUpdatedCounter(prev => prev + 1)
+              toast.success('Rewards credited')
+            }
+          }
+        }
+        else {
+          toast.error('Wallet is not connected.')
         }
       }
     }
@@ -169,8 +243,24 @@ export default function Challenges() {
       else if (item.meta.type === 'x') {
         openLinkInExternalBrowser(item.meta.url)
       }
+      else if (item.meta.type === 'friends') {
+        const getFriendsCountConfig = {
+          method: 'get',
+          maxBodyLength: Infinity,
+          url: `${API_URL}/friends/count?chatId=${userId}`,
+          headers: {}
+        };
+        const resp = await fetchData(getFriendsCountConfig)
+        if (resp.success) {
+          setFriendsTask(resp.totalFriends)
+        }
+      }
+      else if (item.meta.type === 'wallet') {
+        open()
+      }
     }
-  }, [tasks])
+  }, [tasks, userTotalFriends, walletAddress])
+
 
   const renderArray = useCallback((tasks: TaskDetailType[]) => {
     return tasks.map((item) => {
@@ -186,7 +276,7 @@ export default function Challenges() {
         </button>
       </div>)
     })
-  }, [tasks])
+  }, [tasks, userTotalFriends, walletAddress])
 
 
   return (
