@@ -1,16 +1,13 @@
 import React from 'react'
-import Coins from '../../icons/Coins'
-import { leaderBoard, logo } from '../../images';
-import Friend from '../../icons/Friend';
 import { Link } from 'react-router-dom';
-import { FaTasks } from 'react-icons/fa';
-
+import { FaTasks, FaHome, FaUserFriends } from 'react-icons/fa';
+import { TbStairsUp } from "react-icons/tb";
 
 const navigationIcons = {
-    earn: <Coins />,
+    earn: <FaHome className='w-[24px] h-[24px]'/>,
     challenges: <FaTasks className='w-[24px] h-[24px]' />,
-    leaderboard: <img src={leaderBoard} alt="Exchange" className="w-8 h-8 mx-auto" />,
-    friends: <Friend className="w-8 h-8 mx-auto" />
+    leaderboard: <TbStairsUp className='w-[24px] h-[24px]'/>,
+    friends: <FaUserFriends className='w-[24px] h-[24px]'/>
 }
 
 const routes = [

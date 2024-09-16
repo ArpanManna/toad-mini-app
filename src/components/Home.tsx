@@ -5,15 +5,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import GameList from './GameList';
 import toast from 'react-hot-toast';
-import { GameLoss } from '../assets/svg';
 import Confetti from 'react-confetti';
 
 const initialValue = [{ answerText: '', isCorrect: false }];
 const initialEarning = [{ type: 'No earnings till now', score: 0, time: '' }];
 
 export default function Home() {
-    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id ? window.Telegram.WebApp?.initDataUnsafe?.user?.id : '1510838499'
-    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username ? window.Telegram.WebApp?.initDataUnsafe?.user?.username : '1510838499'
+    const userId = window.Telegram.WebApp?.initDataUnsafe?.user?.id
+    const userName = window.Telegram.WebApp?.initDataUnsafe?.user?.username
     const [selectedOption, setSelectedOption] = useState(null)
     const [ans, setAns] = useState({
         isCorrect: null,
@@ -111,11 +110,7 @@ export default function Home() {
                 ...prevValue,
                 isCorrect: false
             }))
-            toast(<div className=' font-mono font-[600] text-[14px] text-rose-500'>Not correct! Better Luck Tomorrow</div>, {
-                icon: <GameLoss />,
-                duration: 3000,
-                position: 'top-center'
-            })
+            toast.error('Not correct! Better luck tomorrow')
         }
 
         const res = await axios.request({
@@ -166,7 +161,6 @@ export default function Home() {
                     return 'bg-green-500 text-white'
                 }
             }
-
         }
         return 'bg-blue-500 text-white';
     }

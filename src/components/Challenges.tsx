@@ -131,7 +131,7 @@ export default function Challenges() {
           const resp = await fetchData(config)
           if (resp.success) {
             setTasksUpdatedCounter(prev => prev + 1)
-            toast.success('Rewards credited')
+            toast.success(`${item.score} TOAD credited`)
           }
         }
       }
@@ -154,7 +154,7 @@ export default function Challenges() {
           const resp = await fetchData(shareRewardsUpdateConfig)
           if (resp.success) {
             setTasksUpdatedCounter(prev => prev + 1)
-            toast.success('Rewards credited')
+            toast.success(`${item.score} TOAD credited`)
           }
         }
         else {
@@ -179,7 +179,7 @@ export default function Challenges() {
         const resp = await fetchData(config)
         if (resp.success) {
           setTasksUpdatedCounter(prev => prev + 1)
-          toast.success('Rewards credited')
+          toast.success(`${item.score} TOAD credited`)
         }
       }
       else if (item.meta.type === 'wallet') {
@@ -219,7 +219,7 @@ export default function Challenges() {
             const walletRewardsShareResponse = await fetchData(shareRewardsWalletConfig)
             if (walletRewardsShareResponse.success) {
               setTasksUpdatedCounter(prev => prev + 1)
-              toast.success('Rewards credited')
+              toast.success(`${item.score} TOAD credited`)
             }
           }
         }
