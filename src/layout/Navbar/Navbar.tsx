@@ -38,9 +38,9 @@ export default function Navbar() {
             <div className='min-h-[62px] h-[62px] w-full flex'></div>
             <div className="w-full mt-auto bg-blue-700 flex justify-around items-center text-xs fixed bottom-0">
                 {
-                    routes.map((item) => {
+                    routes.map((item, index) => {
                         return (
-                            <Link to={item.path} className="text-center text-white w-1/5 flex  items-center justify-center flex-col gap-[2px] py-1">
+                            <Link to={item.path} key={index} className="text-center text-white w-1/5 flex  items-center justify-center flex-col gap-[2px] py-1">
                                 {
                                     navigationIcons[item.svg]
                                 }
