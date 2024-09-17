@@ -66,7 +66,7 @@ export default function DiceDuel() {
                     default:
                         break;
                 }
-                (diceRef.current[index] as HTMLElement).style.animation = 'none';
+                (diceRef.current[index] as HTMLElement).style.animation = '';
                 res(random)
             }, 4050);
         })
@@ -123,7 +123,7 @@ export default function DiceDuel() {
 
     useLayoutEffect(() => {
         const dices = document.querySelectorAll('.dice')
-        diceRef.current = [...dices]
+        diceRef.current = Array.from(dices)
     }, [])
     const infoHandleClick = useCallback(() => {
         toast(
