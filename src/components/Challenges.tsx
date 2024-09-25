@@ -238,7 +238,8 @@ export default function Challenges() {
         result: updateTaskData
       }))
       if (item.meta.type === 'telegram') {
-        openLinkInExternalBrowser(`https://t.me/${item.meta.handle}`)
+        // openLinkInExternalBrowser(`https://t.me/${item.meta.handle}`)
+        openLinkInExternalBrowser(item.meta.url)
       }
       else if (item.meta.type === 'x') {
         openLinkInExternalBrowser(item.meta.url)
