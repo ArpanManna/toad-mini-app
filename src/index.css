@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-type-1: #3a3a59;
+  --color-type-2: #9aa4b2;
+  --color-type-3: #303040;
+  --color-type-4: #403b4d;
+}
 @font-face {
   font-family: Scandia;
   src: url(/src/assets/fonts/ScandiaLine-Regular.ttf);
 }
 
-.Scandia{
+.Scandia {
   font-family: Scandia;
 }
 
@@ -21,21 +27,18 @@
 
 body {
   margin: 0;
-  font-family: "Scandia", "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Scandia", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #000000;
   height: 100vh;
   /* color: #fcfcfd; */
 }
-#root{
+#root {
   height: 100vh;
 }
 code {
-  font-family: "Scandia" , source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace, ;
+  font-family: "Scandia", source-code-pro, Menlo, Monaco, Consolas,
+    "Courier New", monospace;
 }
-
-
